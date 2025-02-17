@@ -140,55 +140,18 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
             </Suspense>
 
             <div className="grid xs:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-[33%,33%,33%] gap-2 text-xs mt-4">
-                {/* <!-- Upcoming Matches --> */}
-
-                <UpcomingMatches
-                // user_league_code={user_league_code}
-                // user_team={user_team}
-
-                />
-                {/* <!-- Completed Matches --> */}
-                {/* <Suspense key={Math.random()} fallback={<p>Loading feed...</p>}> */}
-                <CompletedMatches
-                // user_team={user_team}
-                // user_league_code={user_league_code}
-                />
-                {/* </Suspense> */}
-                {/* <!-- Analysis --> */}
 
 
-                {/* <Suspense fallback={
-                    <div className="flex flex-col gap-1">
-                        <div className="space-y-2">
-                            <Skeleton className="h-10 w-full bg-gray-600" />
+                {/* <UpcomingMatches /> */}
 
-                        </div>
-                        <div className="flex flex-col gap-0.5">
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-
-                        </div>
-
-                    </div>
-                }>
-                    <Analysis />
-                </Suspense> */}
-
-
+                {/* <CompletedMatches />
                 
-                <Points
-
-                />
+                <Points /> */}
             </div>
 
 
-            <div className=' w-full mt-10 '>
-                {/* <SkeletonLoading/> */}
+            {/* <div className=' w-full mt-10 '>
+
 
                 <Suspense fallback={
                     <div className="flex flex-col gap-1 mt-10">
@@ -217,21 +180,11 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
                     <LeagueTable league={league} season={season} />
                 </Suspense>
 
-            </div>
-
-
-
-            {/* <div className="w-[60%] mx-auto mt-10 mb-10">
-                <UpcomingDetails />
-            </div>
-
-            <div className="w-[60%] mx-auto mt-10 mb-10">
-                <CompletedDetails
-
-                    completed_matches={completed_matches}
-
-                />
             </div> */}
+
+
+
+
 
         </>
 
