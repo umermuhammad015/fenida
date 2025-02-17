@@ -1,4 +1,4 @@
-// import UpcomingMatches from './components/upcoming_matches';
+import UpcomingMatches from './components/upcoming_matches';
 // import CompletedMatches from './components/completed_matches';
 // import Points from './components/points';
 // import LeagueTable from './components/league_table';
@@ -37,7 +37,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
             <div className="grid xs:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-[33%,33%,33%] gap-2 text-xs mt-4">
 
 
-                {/* <UpcomingMatches /> */}
+                <UpcomingMatches />
 
                 {/* <CompletedMatches />
                 
