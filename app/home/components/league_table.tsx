@@ -17,10 +17,10 @@ import {
 import { prisma } from '@/app/db';
 import { standings } from '@prisma/client'
 
-interface LeagueTableProps {
-    league: string;
-    season: string;
-}
+// interface LeagueTableProps {
+//     league: string;
+//     season: string;
+// }
 
 type MatchData = {
     team: string;
@@ -130,10 +130,11 @@ async function fetchStandings(league: string, season: string): Promise<standings
     }
 };
 
-export default async function LeagueTable({ league, season }: LeagueTableProps) {
+// export default async function LeagueTable({ league, season }: LeagueTableProps) {
+export default async function LeagueTable() {
 
 
-    const league_table = await fetchStandings(league, season);
+    const league_table = await fetchStandings("ENG1", "2024");
 
 
     const last_Five_Matches: MatchData[] = await prisma.$queryRaw`

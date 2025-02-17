@@ -11,7 +11,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
 
 
     const {
-        league = "ENG1",
+        // league = "ENG1",
         season = "2024",
         user_team = "Nottingham Forest",
         user_league_code = "ENG1"
@@ -74,7 +74,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
                     </div>
 
                 }>
-                    <LeagueTable league={league} season={season} />
+                    {/* <LeagueTable league={league} season={season} /> */}
+                    <LeagueTable />
                 </Suspense>
 
             </div>
