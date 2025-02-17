@@ -1,16 +1,10 @@
-
-import { Skeleton } from "@/components/ui/skeleton"
-// import prisma from "../db";
-import UpcomingMatches from './components/upcoming_matches';
-import CompletedMatches from './components/completed_matches';
-import Points from './components/points';
-import LeagueTable from './components/league_table';
+// import UpcomingMatches from './components/upcoming_matches';
+// import CompletedMatches from './components/completed_matches';
+// import Points from './components/points';
+// import LeagueTable from './components/league_table';
 import { Suspense } from 'react';
 
 import FetchTeamLeague from './components/TeamLeague';
-
-
-// const CompletedMatches = lazy(() => import('./components/completed_matches'))
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
 
