@@ -16,7 +16,7 @@ export default async function Analysis() {
             <div className="bg-background rounded-lg">
                 <div className=" p-4">
                     <div className="flex justify-between p-1 text-sm font-semibold border-b-2 ">
-                        <h2>Analysis</h2>
+                        <h2>Analysise</h2>
                         <h2 className="text-blue-700">Details</h2>
                     </div>
                     <div className="">
