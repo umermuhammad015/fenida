@@ -1,6 +1,6 @@
 import UpcomingMatches from './components/upcoming_matches';
 import CompletedMatches from './components/completed_matches';
-// import Points from './components/points';
+import Points from './components/points';
 // import LeagueTable from './components/league_table';
 import { Suspense } from 'react';
 
@@ -41,7 +41,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
 
                 <CompletedMatches />
                 
-                {/* <Points />  */}
+                <Points /> 
             </div>
 
 
