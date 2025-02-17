@@ -161,24 +161,24 @@ export default async function LeagueTable() {
             
     // `;
 
-    function formatDate(date: string | Date): string {
-        const d = new Date(date);
+    // function formatDate(date: string | Date): string {
+    //     const d = new Date(date);
 
-        // Ensure the date is valid
-        if (isNaN(d.getTime())) {
-            throw new Error("Invalid date format");
-        }
+    //     // Ensure the date is valid
+    //     if (isNaN(d.getTime())) {
+    //         throw new Error("Invalid date format");
+    //     }
 
-        const month = d.toLocaleString('default', { month: 'short' });
-        let day = d.getDate().toString();
-        const year = d.getFullYear();
+    //     const month = d.toLocaleString('default', { month: 'short' });
+    //     let day = d.getDate().toString();
+    //     const year = d.getFullYear();
 
-        if (day.length < 2) {
-            day = '0' + day;
-        }
+    //     if (day.length < 2) {
+    //         day = '0' + day;
+    //     }
 
-        return [day, month, year].join(' ');
-    }
+    //     return [day, month, year].join(' ');
+    // }
 
 
     function formatRank(off_rank: number) {
