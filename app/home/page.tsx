@@ -24,7 +24,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
     return (
         <>
 
-            <Suspense fallback={<>Loading...</>}>
+            <Suspense fallback={<>Loading....</>}>
                 <div className="">
                     <FetchTeamLeague
                         league_start_year={season}
