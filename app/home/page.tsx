@@ -5,13 +5,13 @@ import LeagueTable from './components/league_table';
 import { Suspense } from 'react';
 
 import FetchTeamLeague from './components/TeamLeague';
-import { Skeleton } from '@/components/ui/skeleton';
+// import { Skeleton } from '@/components/ui/skeleton';
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
 
 
     const {
-        league= "ENG1",
+        league = "ENG1",
         season = "2024",
         user_team = "Nottingham Forest",
         user_league_code = "ENG1"
@@ -41,15 +41,15 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
                 <UpcomingMatches />
 
                 <CompletedMatches />
-                
-                <Points /> 
+
+                <Points />
             </div>
 
 
             <div className=' w-full mt-10 '>
 
 
-                <Suspense fallback={
+                {/* <Suspense fallback={
                     <div className="flex flex-col gap-1 mt-10">
                         <div className="space-y-2">
                             <Skeleton className="h-10 w-full bg-gray-600" />
@@ -74,7 +74,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
 
                 }>
                     <LeagueTable league={league} season={season} />
-                </Suspense>
+                </Suspense> */}
+                <LeagueTable league={league} season={season} />
 
             </div>
 
