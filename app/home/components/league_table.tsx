@@ -6,7 +6,6 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import clsx from 'clsx';
-// import { PrismaClient } from "@prisma/client";
 import {
     Table,
     TableBody,
@@ -16,24 +15,12 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { prisma } from '@/app/db';
-// import FetchLeague from './fetchLeague'
-// import { useSearchParams } from 'next/navigation';
+import { standings } from '@prisma/client'
+
 interface LeagueTableProps {
     league: string;
     season: string;
 }
-
-
-// interface MatchData {
-//     team: string;
-//     team_against: string;
-//     goals: number;
-//     goals_against: number;
-//     league_code: string;
-//     ground: string;
-//     date: Date;
-//     league_start_year: number;
-// }
 
 type MatchData = {
     team: string;
@@ -47,29 +34,107 @@ type MatchData = {
     row_num: bigint;
 };
 
+// type StandingsProps = {
+//     standings: standings | null; // Use the type defined in the Prisma schema
+// };
+
+// type LeagueTableTypes = {
+//     id: number,
+//     country: string
+//     league_start_year: number,
+//     league_code: string,
+//     team: string,
+//     team_short: string,
+//     team_code: string,
+//     games: number,
+//     position: number,
+//     points: number,
+//     pts: number,
+//     wins: number,
+//     draws: number,
+//     goalsF: number,
+//     goalsA: number,
+//     goalDiff: number,
+//     champion: number,
+//     top_4: number,
+//     relegation: number,
+//     goals_sum: number,
+//     goals_against_sum: number,
+//     xg_mean: number,
+//     xg_against_mean: number,
+//     xga_percent_rank: number,
+//     xgf_percent_rank: number,
+//     off_rank: number,
+//     def_rank: number,
+//     result: string,
+//     upload_date_time: Date
+// }
+// type LeagueTableTypesWithNulls = {
+//     id: number | null,
+//     country: string | null,
+//     league_start_year: number | null,
+//     league_code: string | null,
+//     team: string | null,
+//     team_short: string | null,
+//     team_code: string | null,
+//     games: number | null,
+//     position: number | null,
+//     points: number | null,
+//     pts: number | null,
+//     wins: number | null,
+//     draws: number | null,
+//     goalsF: number | null,
+//     goalsA: number | null,
+//     goalDiff: number | null,
+//     champion: number | null,
+//     top_4: number | null,
+//     relegation: number | null,
+//     goals_sum: number | null,
+//     goals_against_sum: number | null,
+//     xg_mean: number | null,
+//     xg_against_mean: number | null,
+//     xga_percent_rank: number | null,
+//     xgf_percent_rank: number | null,
+//     off_rank: number | null,
+//     def_rank: number | null,
+//     result: string | null,
+//     upload_date_time: Date | null
+// }
+
+async function fetchStandings(league: string, season: string): Promise<standings[] | undefined> {
+
+
+    try {
+        const league_table = await prisma.standings.findMany({
+            where: {
+                league_code: league,
+                league_start_year: Number(season)
+            },
+            orderBy: [
+                {
+                    pts: 'desc',
+                },
+            ],
+            // take: 10,
+        });
+
+        console.log("league_table")
+        console.log(league_table)
+
+        if (!league_table) throw new Error('Failed to fetch League table data')
+
+        return (league_table)
+
+    } catch (error) {
+        console.error('Error fetching league table data:', error);
+    }
+};
+
 export default async function LeagueTable({ league, season }: LeagueTableProps) {
 
-    // await new Promise(function (resolve) {
-    //     setTimeout(resolve, 3000);
-    // });
 
-    // console.log(league_code)
-    // console.log("Season value is: ")
-    // console.log(season)
+    const league_table = await fetchStandings(league, season);
 
-    const league_table = await prisma.standings.findMany({
-        where: {
-            // position: { in: ['GK', 'LB'] },
-            league_code: league,
-            league_start_year: Number(season)
-        },
-        orderBy: [
-            {
-                pts: 'desc',
-            },
-        ],
-        // take: 10,
-    });
 
     const last_Five_Matches: MatchData[] = await prisma.$queryRaw`
     
@@ -94,14 +159,6 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
                 ORDER BY team, date ASC;
             
     `;
-
-
-    // console.log(last_Five_Matches)
-
-
-
-    
-
 
     function formatDate(date: string | Date): string {
         const d = new Date(date);
@@ -158,33 +215,6 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
 
 
     }
-
-    // function formatResult(r) {
-
-    //     // let result = 'WLWLL';
-
-    //     let formatted_result = []
-
-    //     let i;
-
-    //     for (i of r) {
-    //         if (i === 'W') {
-
-    //             formatted_result.push(<div className="bold">W</div>)
-    //         } else {
-    //             formatted_result.push(<div>L</div>)
-    //         }
-
-    //     }
-
-    //     // formatted_result = formatted_result.join("")
-    //     // console.log(formatted_result.join(""))
-
-    //     // console.log(formatted_result)
-
-    //     return (formatted_result.join(""))
-
-    // }
 
     function showFixtureResult(team: string, team_against: string,
         ground: string, goals: number, goals_against: number, date: Date) {
@@ -244,13 +274,6 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
         }
 
     }
-
-
-
-    // last_Five_Matches.filter((match:any) => match.team === row.team)[index].team_against === "home" ?
-
-
-    // last_Five_Matches.filter((match:any) => match.team === row.team)[index].team_against
 
 
     return (
@@ -320,7 +343,7 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
                             </TableHeader>
                             <TableBody>
 
-                                {league_table.map((row, index) => (
+                                {league_table && league_table?.map((row: standings, index: number) => (
 
 
                                     <TableRow key={index} className="border-b rounded-3xl">
@@ -438,7 +461,7 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
                                                                         // last_Five_Matches.filter((match: any) => (match.league_code === row.league_code && match.team === row.team))[index].country,
                                                                         // last_Five_Matches.filter((match: any) => match.team === row.team)[index].country,
                                                                         // (last_Five_Matches as unknown).forEach((match: { team: string; team_against: any; goals: any; goals_against: any; }) => {
-                                                                            // last_Five_Matches.length > 0 && (last_Five_Matches).filter((match: any) => match.team === row.team)[index].team,
+                                                                        // last_Five_Matches.length > 0 && (last_Five_Matches).filter((match: any) => match.team === row.team)[index].team,
                                                                         last_Five_Matches.filter((match) => match.team === row.team)[index].team,
                                                                         last_Five_Matches.filter((match) => match.team === row.team)[index].team_against,
                                                                         last_Five_Matches.filter((match) => match.team === row.team)[index].ground,
