@@ -1,16 +1,17 @@
 import UpcomingMatches from './components/upcoming_matches';
 import CompletedMatches from './components/completed_matches';
 import Points from './components/points';
-// import LeagueTable from './components/league_table';
+import LeagueTable from './components/league_table';
 import { Suspense } from 'react';
 
 import FetchTeamLeague from './components/TeamLeague';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
 
 
     const {
-        // league= "ENG1",
+        league= "ENG1",
         season = "2024",
         user_team = "Nottingham Forest",
         user_league_code = "ENG1"
@@ -45,7 +46,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
             </div>
 
 
-            {/* <div className=' w-full mt-10 '>
+            <div className=' w-full mt-10 '>
 
 
                 <Suspense fallback={
@@ -75,7 +76,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
                     <LeagueTable league={league} season={season} />
                 </Suspense>
 
-            </div> */}
+            </div>
 
 
 
