@@ -1,7 +1,7 @@
 import UpcomingMatches from './components/upcoming_matches';
 import CompletedMatches from './components/completed_matches';
 import Points from './components/points';
-// import LeagueTable from './components/league_table';
+import LeagueTable from './components/league_table';
 import { Suspense } from 'react';
 
 import FetchTeamLeague from './components/TeamLeague';
@@ -47,7 +47,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
             </div>
 
 
-            {/* <div className=' w-full mt-10 '>
+            <div className=' w-full mt-10 '>
                 <div className="flex flex-col gap-0.5">
 
                     <Suspense fallback={<>Loading...</>}>
@@ -56,7 +56,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
                     </Suspense>
 
                 </div>
-            </div> */}
+            </div>
 
 
             {/* <div className=' w-full mt-10 '>
