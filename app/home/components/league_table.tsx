@@ -246,7 +246,8 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
     // }
 
     function showFixtureResult(team: string, team_against: string,
-        ground: string, goals: number, goals_against: number, date: Date) {
+        // ground: string, goals: number, goals_against: number, date: Date) {
+        ground: string, goals: number, goals_against: number) {
 
         if (ground === "home") {
 
@@ -501,7 +502,7 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
                                                                         last_Five_Matches.filter((match) => match.team === row.team)[index].ground,
                                                                         last_Five_Matches.filter((match) => match.team === row.team)[index].goals,
                                                                         last_Five_Matches.filter((match) => match.team === row.team)[index].goals_against,
-                                                                        last_Five_Matches.filter((match) => match.team === row.team)[index].date
+                                                                        // last_Five_Matches.filter((match) => match.team === row.team)[index].date
                                                                     )
                                                                 }
                                                             </TooltipContent>
