@@ -71,38 +71,38 @@ type MatchData = {
 //     result: string,
 //     upload_date_time: Date
 // }
-type LeagueTableTypesWithNulls = {
-    id: number | null,
-    country: string | null,
-    league_start_year: number | null,
-    league_code: string | null,
-    team: string | null,
-    team_short: string | null,
-    team_code: string | null,
-    games: number | null,
-    position: number | null,
-    points: number | null,
-    pts: number | null,
-    wins: number | null,
-    draws: number | null,
-    goalsF: number | null,
-    goalsA: number | null,
-    goalDiff: number | null,
-    champion: number | null,
-    top_4: number | null,
-    relegation: number | null,
-    goals_sum: number | null,
-    goals_against_sum: number | null,
-    xg_mean: number | null,
-    xg_against_mean: number | null,
-    xga_percent_rank: number | null,
-    xgf_percent_rank: number | null,
-    off_rank: number | null,
-    def_rank: number | null,
-    result: string | null,
-    // upload_date_time: Date | null
-    upload_date_time: string | null
-}
+// type LeagueTableTypesWithNulls = {
+//     id: number | null,
+//     country: string | null,
+//     league_start_year: number | null,
+//     league_code: string | null,
+//     team: string | null,
+//     team_short: string | null,
+//     team_code: string | null,
+//     games: number | null,
+//     position: number | null,
+//     points: number | null,
+//     pts: number | null,
+//     wins: number | null,
+//     draws: number | null,
+//     goalsF: number | null,
+//     goalsA: number | null,
+//     goalDiff: number | null,
+//     champion: number | null,
+//     top_4: number | null,
+//     relegation: number | null,
+//     goals_sum: number | null,
+//     goals_against_sum: number | null,
+//     xg_mean: number | null,
+//     xg_against_mean: number | null,
+//     xga_percent_rank: number | null,
+//     xgf_percent_rank: number | null,
+//     off_rank: number | null,
+//     def_rank: number | null,
+//     result: string | null,
+//     // upload_date_time: Date | null
+//     upload_date_time: string | null
+// }
 
 async function fetchStandings(league: string, season: string): Promise<standings[] | undefined> {
 
