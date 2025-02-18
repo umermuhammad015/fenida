@@ -5,13 +5,14 @@ import LeagueTable from './components/league_table';
 import { Suspense } from 'react';
 
 import FetchTeamLeague from './components/TeamLeague';
-import { Skeleton } from '@/components/ui/skeleton';
+// import { Skeleton } from '@/components/ui/skeleton';
+// import LeagueTable2 from './components/league_table2';
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
 
 
     const {
-        // league = "ENG1",
+        league = "ENG1",
         season = "2024",
         user_team = "Nottingham Forest",
         user_league_code = "ENG1"
@@ -46,43 +47,21 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
             </div>
 
 
-            <div className=' w-full mt-10 '>
-                <Skeleton className="h-10 w-full bg-gray-600" />
+            {/* <div className=' w-full mt-10 '>
+                <div className="flex flex-col gap-0.5">
 
-            </div>
-            <div className="flex flex-col gap-0.5">
+                    <Suspense fallback={<>Loading...</>}>
+                        <LeagueTable league={league} season={season} />
 
+                    </Suspense>
 
-
-                <Suspense fallback={
-                    <div className="flex flex-col gap-1 mt-10">
-                        <div className="space-y-2">
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                        </div>
-
-                    </div>
-
-                }>
-                    {/* <LeagueTable league={league} season={season} /> */}
-                    <LeagueTable />
-                </Suspense>
-
-            </div>
+                </div>
+            </div> */}
 
 
-
-
+            {/* <div className=' w-full mt-10 '>
+                <LeagueTable2 />
+            </div> */}
 
         </>
 

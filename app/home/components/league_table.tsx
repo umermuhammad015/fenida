@@ -17,22 +17,22 @@ import {
 import { prisma } from '@/app/db';
 import { standings } from '@prisma/client'
 
-// interface LeagueTableProps {
-//     league: string;
-//     season: string;
-// }
+interface LeagueTableProps {
+    league: string;
+    season: string;
+}
 
-// type MatchData = {
-//     team: string;
-//     team_against: string;
-//     goals: number;
-//     goals_against: number;
-//     league_code: string;
-//     ground: "home" | "away";  // Restricting values to "home" or "away"
-//     date: Date;
-//     league_start_year: bigint;
-//     row_num: bigint;
-// };
+type MatchData = {
+    team: string;
+    team_against: string;
+    goals: number;
+    goals_against: number;
+    league_code: string;
+    ground: "home" | "away";  // Restricting values to "home" or "away"
+    date: Date;
+    league_start_year: bigint;
+    row_num: bigint;
+};
 
 // type StandingsProps = {
 //     standings: standings | null; // Use the type defined in the Prisma schema
@@ -131,54 +131,54 @@ async function fetchStandings(league: string, season: string): Promise<standings
 };
 
 // export default async function LeagueTable({ league, season }: LeagueTableProps) {
-export default async function LeagueTable() {
+export default async function LeagueTable({ league, season }: LeagueTableProps) {
 
 
-    const league_table = await fetchStandings("ENG1", "2024");
+    const league_table = await fetchStandings(league, season);
 
 
-    // const last_Five_Matches: MatchData[] = await prisma.$queryRaw`
+    const last_Five_Matches: MatchData[] = await prisma.$queryRaw`
     
-    //         SELECT * FROM (
-    //             SELECT 
-    //                 team,
-    //                 team_against,
-    //                 goals,
-    //                 goals_against,
-    //                 league_code,
-    //                 ground,
-    //                 date,
-    //                 league_start_year,
-    //                 ROW_NUMBER() OVER (
-    //                 PARTITION BY team 
-    //                 ORDER BY date DESC
-    //                 ) as row_num
-    //             FROM fenida_fenida.points_long 
-    //             WHERE league_start_year = 2024 AND status = 'completed' AND league_code NOT IN ('UEL', 'UCL')
-    //             ) ranked_teams
-    //             WHERE row_num <= 5
-    //             ORDER BY team, date ASC;
+            SELECT * FROM (
+                SELECT 
+                    team,
+                    team_against,
+                    goals,
+                    goals_against,
+                    league_code,
+                    ground,
+                    date,
+                    league_start_year,
+                    ROW_NUMBER() OVER (
+                    PARTITION BY team 
+                    ORDER BY date DESC
+                    ) as row_num
+                FROM fenida_fenida.points_long 
+                WHERE league_start_year = 2024 AND status = 'completed' AND league_code NOT IN ('UEL', 'UCL')
+                ) ranked_teams
+                WHERE row_num <= 5
+                ORDER BY team, date ASC;
             
-    // `;
+    `;
 
-    // function formatDate(date: string | Date): string {
-    //     const d = new Date(date);
+    function formatDate(date: string | Date): string {
+        const d = new Date(date);
 
-    //     // Ensure the date is valid
-    //     if (isNaN(d.getTime())) {
-    //         throw new Error("Invalid date format");
-    //     }
+        // Ensure the date is valid
+        if (isNaN(d.getTime())) {
+            throw new Error("Invalid date format");
+        }
 
-    //     const month = d.toLocaleString('default', { month: 'short' });
-    //     let day = d.getDate().toString();
-    //     const year = d.getFullYear();
+        const month = d.toLocaleString('default', { month: 'short' });
+        let day = d.getDate().toString();
+        const year = d.getFullYear();
 
-    //     if (day.length < 2) {
-    //         day = '0' + day;
-    //     }
+        if (day.length < 2) {
+            day = '0' + day;
+        }
 
-    //     return [day, month, year].join(' ');
-    // }
+        return [day, month, year].join(' ');
+    }
 
 
     function formatRank(off_rank: number) {
@@ -217,64 +217,64 @@ export default async function LeagueTable() {
 
     }
 
-    // function showFixtureResult(team: string, team_against: string,
-    //     ground: string, goals: number, goals_against: number, date: Date) {
+    function showFixtureResult(team: string, team_against: string,
+        ground: string, goals: number, goals_against: number, date: Date) {
 
-    //     if (ground === "home") {
+        if (ground === "home") {
 
-    //         return (
-    //             <>
-    //                 <div className="flex flex-col space-y-2 border p-2 shadow-sm rounded-sm">
-    //                     <div className="text-sm text-gray-500 text-center">
-    //                         {formatDate(date)}
-    //                     </div>
-    //                     <div className="flex items-center justify-between gap-3">
-    //                         <span className="">{team}</span>
-    //                         <span className=" font-semibold">{goals}</span>
-    //                         vs
-    //                         <span className=" font-semibold">{goals_against}</span>
-    //                         <span className="">{team_against}</span>
-    //                     </div>
-    //                 </div>
+            return (
+                <>
+                    <div className="flex flex-col space-y-2 border p-2 shadow-sm rounded-sm">
+                        <div className="text-sm text-gray-500 text-center">
+                            {formatDate(date)}
+                        </div>
+                        <div className="flex items-center justify-between gap-3">
+                            <span className="">{team}</span>
+                            <span className=" font-semibold">{goals}</span>
+                            vs
+                            <span className=" font-semibold">{goals_against}</span>
+                            <span className="">{team_against}</span>
+                        </div>
+                    </div>
 
-    //                 {/* <div className="flex flex-col space-y-2">
-    //                     <div className="text-sm text-gray-500">
-    //                         16-Feb-2024
-    //                     </div>
-    //                     <div className="flex items-center justify-between gap-3">
-    //                         <span className="text-gray-700">Liverpool</span>
-    //                         <div className="flex items-center gap-2">
-    //                             <span className="font-semibold text-green-600">2</span>
-    //                             <span className="text-gray-400">-</span>
-    //                             <span className="font-semibold text-red-600">0</span>
-    //                         </div>
-    //                         <span className="text-gray-700">Nottingham Forest</span>
-    //                     </div>
-    //                 </div> */}
-    //             </>
-    //         )
+                    {/* <div className="flex flex-col space-y-2">
+                        <div className="text-sm text-gray-500">
+                            16-Feb-2024
+                        </div>
+                        <div className="flex items-center justify-between gap-3">
+                            <span className="text-gray-700">Liverpool</span>
+                            <div className="flex items-center gap-2">
+                                <span className="font-semibold text-green-600">2</span>
+                                <span className="text-gray-400">-</span>
+                                <span className="font-semibold text-red-600">0</span>
+                            </div>
+                            <span className="text-gray-700">Nottingham Forest</span>
+                        </div>
+                    </div> */}
+                </>
+            )
 
-    //     } else if (ground === "away") {
+        } else if (ground === "away") {
 
-    //         return (
-    //             <div className="flex flex-col space-y-2 border p-2 shadow-sm rounded-sm">
-    //                 <div className="text-sm text-gray-500 text-center">
-    //                     {formatDate(date)}
-    //                 </div>
-    //                 <div>
-    //                     <span className="mr-3">{team_against}</span>
-    //                     <span className="mr-3 font-semibold">{goals_against}</span>
-    //                     vs
-    //                     <span className=" ml-3 font-semibold">{goals}</span>
-    //                     <span className="ml-3">{team}</span>
-    //                 </div>
-    //             </div>
-    //         )
-    //     } else {
-    //         return ("")
-    //     }
+            return (
+                <div className="flex flex-col space-y-2 border p-2 shadow-sm rounded-sm">
+                    <div className="text-sm text-gray-500 text-center">
+                        {formatDate(date)}
+                    </div>
+                    <div>
+                        <span className="mr-3">{team_against}</span>
+                        <span className="mr-3 font-semibold">{goals_against}</span>
+                        vs
+                        <span className=" ml-3 font-semibold">{goals}</span>
+                        <span className="ml-3">{team}</span>
+                    </div>
+                </div>
+            )
+        } else {
+            return ("")
+        }
 
-    // }
+    }
 
 
     return (
@@ -458,18 +458,18 @@ export default async function LeagueTable() {
                                                                     // last_Five_Matches.filter((match:any) => (match.team === row.team && match.league_code === row.league_code))[index]
                                                                     // last_Five_Matches.filter((match:any) => (match.team === row.team && match.league_code === row.league_code))[index]
 
-                                                                    // showFixtureResult(
-                                                                    //     // last_Five_Matches.filter((match: any) => (match.league_code === row.league_code && match.team === row.team))[index].country,
-                                                                    //     // last_Five_Matches.filter((match: any) => match.team === row.team)[index].country,
-                                                                    //     // (last_Five_Matches as unknown).forEach((match: { team: string; team_against: any; goals: any; goals_against: any; }) => {
-                                                                    //     // last_Five_Matches.length > 0 && (last_Five_Matches).filter((match: any) => match.team === row.team)[index].team,
-                                                                    //     last_Five_Matches.filter((match) => match.team === row.team)[index].team,
-                                                                    //     last_Five_Matches.filter((match) => match.team === row.team)[index].team_against,
-                                                                    //     last_Five_Matches.filter((match) => match.team === row.team)[index].ground,
-                                                                    //     last_Five_Matches.filter((match) => match.team === row.team)[index].goals,
-                                                                    //     last_Five_Matches.filter((match) => match.team === row.team)[index].goals_against,
-                                                                    //     last_Five_Matches.filter((match) => match.team === row.team)[index].date
-                                                                    // )
+                                                                    showFixtureResult(
+                                                                        // last_Five_Matches.filter((match: any) => (match.league_code === row.league_code && match.team === row.team))[index].country,
+                                                                        // last_Five_Matches.filter((match: any) => match.team === row.team)[index].country,
+                                                                        // (last_Five_Matches as unknown).forEach((match: { team: string; team_against: any; goals: any; goals_against: any; }) => {
+                                                                        // last_Five_Matches.length > 0 && (last_Five_Matches).filter((match: any) => match.team === row.team)[index].team,
+                                                                        last_Five_Matches.filter((match) => match.team === row.team)[index].team,
+                                                                        last_Five_Matches.filter((match) => match.team === row.team)[index].team_against,
+                                                                        last_Five_Matches.filter((match) => match.team === row.team)[index].ground,
+                                                                        last_Five_Matches.filter((match) => match.team === row.team)[index].goals,
+                                                                        last_Five_Matches.filter((match) => match.team === row.team)[index].goals_against,
+                                                                        last_Five_Matches.filter((match) => match.team === row.team)[index].date
+                                                                    )
                                                                 }
                                                             </TooltipContent>
                                                         </Tooltip>
