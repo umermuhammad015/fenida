@@ -1,7 +1,7 @@
 import UpcomingMatches from './components/upcoming_matches';
 import CompletedMatches from './components/completed_matches';
 import Points from './components/points';
-import LeagueTable from './components/league_table';
+// import LeagueTable from './components/league_table';
 import { Suspense } from 'react';
 
 import FetchTeamLeague from './components/TeamLeague';
