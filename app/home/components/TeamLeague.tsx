@@ -22,7 +22,7 @@ type Teamleague = {
 
 export default function FetchTeamLeague({ league_start_year, user_league_code, user_team }: Teamleague) {
 
-    console.log("component renderd")
+    // console.log("component renderd")
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -89,8 +89,8 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
 
                 const all_seasons = await FetchSeason()
 
-                console.log("seasons list");
-                console.log(all_seasons);
+                // console.log("seasons list");
+                // console.log(all_seasons);
 
                 setSeasonsList(all_seasons);
 

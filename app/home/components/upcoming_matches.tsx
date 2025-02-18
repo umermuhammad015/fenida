@@ -127,8 +127,8 @@ export default function UpcomingMatches() {
             try {
                 const um = await fetchUpcomingMatches(user_league_code, user_team);
 
-                console.log("um")
-                console.log(um)
+                // console.log("um")
+                // console.log(um)
 
                 setUpcomingMatches(um);
                 setIsLoading(false)

@@ -101,7 +101,35 @@ type MatchData = {
 //     upload_date_time: Date | null
 // }
 
-async function fetchStandings(league: string, season: string): Promise<standings[] | undefined> {
+// async function fetchStandings(league: string, season: string): Promise<standings[] | undefined> {
+
+
+//     try {
+//         const league_table = await prisma.standings.findMany({
+//             where: {
+//                 league_code: league,
+//                 league_start_year: Number(season)
+//             },
+//             orderBy: [
+//                 {
+//                     pts: 'desc',
+//                 },
+//             ],
+//             // take: 10,
+//         });
+
+//         // console.log("league_table")
+//         // console.log(league_table)
+
+//         if (!league_table) throw new Error('Failed to fetch League table data')
+
+//         return (league_table)
+
+//     } catch (error) {
+//         console.error('Error fetching league table data:', error);
+//     }
+// };
+const League = async function fetchStandings(league: string, season: string): Promise<standings[] | undefined> {
 
 
     try {
@@ -118,8 +146,8 @@ async function fetchStandings(league: string, season: string): Promise<standings
             // take: 10,
         });
 
-        console.log("league_table")
-        console.log(league_table)
+        // console.log("league_table")
+        // console.log(league_table)
 
         if (!league_table) throw new Error('Failed to fetch League table data')
 
@@ -134,7 +162,7 @@ async function fetchStandings(league: string, season: string): Promise<standings
 export default async function LeagueTable({ league, season }: LeagueTableProps) {
 
 
-    const league_table = await fetchStandings(league, season);
+    const league_table = await League(league, season);
 
 
     const last_Five_Matches: MatchData[] = await prisma.$queryRaw`
@@ -161,61 +189,61 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
             
     `;
 
-    function formatDate(date: string | Date): string {
-        const d = new Date(date);
+    // function formatDate(date: string | Date): string {
+    //     const d = new Date(date);
 
-        // Ensure the date is valid
-        if (isNaN(d.getTime())) {
-            throw new Error("Invalid date format");
-        }
+    //     // Ensure the date is valid
+    //     if (isNaN(d.getTime())) {
+    //         throw new Error("Invalid date format");
+    //     }
 
-        const month = d.toLocaleString('default', { month: 'short' });
-        let day = d.getDate().toString();
-        const year = d.getFullYear();
+    //     const month = d.toLocaleString('default', { month: 'short' });
+    //     let day = d.getDate().toString();
+    //     const year = d.getFullYear();
 
-        if (day.length < 2) {
-            day = '0' + day;
-        }
+    //     if (day.length < 2) {
+    //         day = '0' + day;
+    //     }
 
-        return [day, month, year].join(' ');
-    }
-
-
-    function formatRank(off_rank: number) {
-        const off = off_rank.toString();
-
-        if (off === "1") {
-            return "1st"
-        }
-
-        if (off === "2") {
-            return "2nd"
-        }
-
-        if (off === "3") {
-            return "3rd"
-        }
-
-        return (off.concat("th"))
-
-    }
+    //     return [day, month, year].join(' ');
+    // }
 
 
-    function formatGoalDiff(v: number | null | undefined) {
+    // function formatRank(off_rank: number) {
+    //     const off = off_rank.toString();
 
-        if (v === undefined || v === null) {
-            // GD = 0; // or any default value you prefer
-            return (<>-</>)
-        } else if (Math.round(v) > 0) {
+    //     if (off === "1") {
+    //         return "1st"
+    //     }
 
-            return (<>+{v}</>)
-            // GD = Math.round(goalDiff);
-        } else {
-            return (<>{v}</>)
-        }
+    //     if (off === "2") {
+    //         return "2nd"
+    //     }
+
+    //     if (off === "3") {
+    //         return "3rd"
+    //     }
+
+    //     return (off.concat("th"))
+
+    // }
 
 
-    }
+    // function formatGoalDiff(v: number | null | undefined) {
+
+    //     if (v === undefined || v === null) {
+    //         // GD = 0; // or any default value you prefer
+    //         return (<>-</>)
+    //     } else if (Math.round(v) > 0) {
+
+    //         return (<>+{v}</>)
+    //         // GD = Math.round(goalDiff);
+    //     } else {
+    //         return (<>{v}</>)
+    //     }
+
+
+    // }
 
     function showFixtureResult(team: string, team_against: string,
         ground: string, goals: number, goals_against: number, date: Date) {
@@ -226,7 +254,8 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
                 <>
                     <div className="flex flex-col space-y-2 border p-2 shadow-sm rounded-sm">
                         <div className="text-sm text-gray-500 text-center">
-                            {formatDate(date)}
+                            {/* {formatDate(date)} */}
+                            {/* {date} */}
                         </div>
                         <div className="flex items-center justify-between gap-3">
                             <span className="">{team}</span>
@@ -259,7 +288,8 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
             return (
                 <div className="flex flex-col space-y-2 border p-2 shadow-sm rounded-sm">
                     <div className="text-sm text-gray-500 text-center">
-                        {formatDate(date)}
+                        {/* {formatDate(date)} */}
+                        {/* {formatDate(date)} */}
                     </div>
                     <div>
                         <span className="mr-3">{team_against}</span>
@@ -377,13 +407,15 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
                                         <TableCell >
                                             {/* <div className="w-12 p-1 mx-1 border border-gray-200 rounded text-center font-semibold dark:border-muted">{(row?.off_rank)}</div> */}
                                             <div className="w-12 p-1 mx-1 border border-gray-200 rounded text-center font-semibold dark:border-muted">
-                                                {row.off_rank === null ? "-" : formatRank(row.off_rank).toString()}
+                                                {/* {row.off_rank === null ? "-" : formatRank(row.off_rank).toString()} */}
+                                                {row.off_rank === null ? "-" : (row.off_rank).toString()}
                                             </div>
                                         </TableCell >
                                         <TableCell >
                                             {/* <div className=" w-12 p-1 mx-1 border border-gray-200 rounded text-center font-semibold dark:border-muted">{(row?.def_rank)}</div> */}
                                             <div className="w-12 p-1 mx-1 border border-gray-200 rounded text-center font-semibold dark:border-muted">
-                                                {row.def_rank === null ? "-" : formatRank(row.def_rank)}
+                                                {/* {row.def_rank === null ? "-" : formatRank(row.def_rank)} */}
+                                                {row.def_rank === null ? "-" : (row.def_rank)}
                                             </div>
                                         </TableCell >
                                         <TableCell >
@@ -391,7 +423,8 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
                                         </TableCell >
                                         <TableCell >
                                             <div className="w-12 p-1 mx-1 bg-gray-100 text-gray-400 rounded text-center font-semibold dark:bg-muted">
-                                                {formatGoalDiff(row?.goalDiff)}
+                                                {/* {formatGoalDiff(row?.goalDiff)} */}
+                                                {(row?.goalDiff)}
                                                 {/* {
                                                             (row?.goalDiff === undefined || row?.goalDiff === null) ? "-" : ((Math.round(row?.goalDiff) > 0) && +{row?.goalDiff})
                                                             } else if(Math.round(v) > 0) {

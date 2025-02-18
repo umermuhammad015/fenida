@@ -51,40 +51,8 @@
 // // }
 
 
-// type LeagueTableTypesWithNulls = {
-//     id: number,
-//     country: string | null,
-//     league_start_year: bigint | null,
-//     league_code: string | null,
-//     team: string | null,
-//     team_short: string | null,
-//     team_code: string | null,
-//     games: bigint | null,
-//     position: bigint | null,
-//     points: number | null,
-//     pts: bigint | null,
-//     wins: bigint | null,
-//     draws: bigint | null,
-//     goalsF: bigint | null,
-//     goalsA: bigint | null,
-//     goalDiff: number | null,
-//     champion: bigint | null,
-//     top_4: bigint | null,
-//     relegation: bigint | null,
-//     goals_sum: bigint | null,
-//     goals_against_sum: bigint | null,
-//     xg_mean: bigint | null,
-//     xg_against_mean: bigint | null,
-//     xga_percent_rank: bigint | null,
-//     xgf_percent_rank: bigint | null,
-//     off_rank: number | null,
-//     def_rank: number | null,
-//     result: string | null,
-//     upload_date_time: string | null
-// }
-
 // // type LeagueTableTypesWithNulls = {
-// //     id: number | null,
+// //     id: number,
 // //     country: string | null,
 // //     league_start_year: number | null,
 // //     league_code: string | null,
@@ -112,8 +80,40 @@
 // //     off_rank: number | null,
 // //     def_rank: number | null,
 // //     result: string | null,
-// //     upload_date_time: Date | null
+// //     upload_date_time: string | null
 // // }
+
+// type LeagueTableTypesWithNulls = {
+//     champion: number | null;                 // Percentage/probability of becoming champion
+//     country: string | null;                 // Country name
+//     def_rank: number | null;               // Defensive ranking
+//     draws: number | null;                  // Average/expected draws
+//     games: number | null;                  // Number of games played
+//     goalDiff: number | null;              // Goal difference
+//     goalsA: number | null;                // Average goals against
+//     goalsF: number | null;                // Average goals for
+//     goals_against_sum: number | null;     // Total goals conceded
+//     goals_sum: number | null;             // Total goals scored
+//     id: number | null;                    // Team ID
+//     league_code: string | null;           // League identifier
+//     league_start_year: bigint | null;     // Season start year
+//     off_rank: number | null;              // Offensive ranking
+//     points: number | null;                // Expected/average points
+//     position: number | null;              // Average/expected position
+//     pts: number | null;                   // Current points
+//     relegation: number | null;            // Relegation probability percentage
+//     result: string | null;               // Recent match results string
+//     team: string | null;                 // Full team name
+//     team_code: string | null;            // Team code/abbreviation
+//     team_short: string | null;           // Short team name
+//     top_4: number | null;                // Probability of finishing in top 4
+//     upload_date_time: string | null;       // Data upload timestamp
+//     wins: number | null;                 // Number of wins
+//     xg_against_mean: number | null;      // Expected goals against mean
+//     xg_mean: number | null;              // Expected goals mean
+//     xga_percent_rank: number | null;     // Expected goals against percentile rank
+//     xgf_percent_rank: number | null;
+// }
 
 
 
@@ -127,7 +127,7 @@
 //     // const [league_table, setLeagueTable] = useState<any>([]);
 //     // const [upcoming_matches_all, setUpcomingMatchesAll] = useState<any>([])
 
-//     const user_league_code = searchParams.get('league') || "ENG1"
+//     const user_league_code = searchParams.get('league_code') || "ENG1"
 //     const season = searchParams.get('season') || "2024"
 //     // const user_team = searchParams.get('team') || "Nottingham Forest"
 
@@ -176,13 +176,13 @@
 //             try {
 //                 const lt = await fetchLeagueTable(user_league_code, season);
 
-//                 console.log("um")
+//                 console.log("before")
 //                 console.log(lt)
 
 //                 setLeagueTable(lt);
 //                 setIsLoading(false)
 
-//                 console.log("um")
+//                 console.log("after")
 //                 console.log(lt)
 //             } catch (error) {
 //                 console.error('Error fetching completed matches data:', error);
@@ -208,8 +208,6 @@
 //     } else {
 //         return (
 //             <>
-
-
 //                 <div className=" shadow-none rounded-lg text-xs">
 //                     <div className="">
 //                         <div className="flex justify-between bg-background rounded-t-lg  w-full p-4  ">
