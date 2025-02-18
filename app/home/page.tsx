@@ -50,25 +50,23 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
             <div className=' w-full mt-10 '>
                 <div className="flex flex-col gap-0.5">
 
-                    <Suspense fallback={
-                        <div className="flex flex-col gap-1 mt-10">
-                            <Skeleton className="h-10 w-full bg-gray-600" />
-                            <div className="space-y-2">
-                                <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                                <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                                <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                                <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                                <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                                <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                                <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                                <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                                <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                                <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                                <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                                <Skeleton className="h-8 w-full bg-gray-300 mt-4 rounded-lg" />
-                            </div>
+                    <Suspense key={`${league}-${season}`} fallback={
+                        <div className="space-y-4 p-4 bg-gray-100 rounded-lg shadow-sm animate-pulse">
+                            {/* Title Placeholder */}
+                            <Skeleton className="h-10 w-1/3 bg-gray-300 rounded-lg" />
 
+                            {/* Table Row Placeholder */}
+                            <div className="space-y-3">
+                                {Array.from({ length: 10 }).map((_, i) => (
+                                    <div key={i} className="flex items-center space-x-4">
+                                        <Skeleton className="h-8 w-12 bg-gray-300 rounded-md" /> {/* Icon/Ranking */}
+                                        <Skeleton className="h-8 flex-1 bg-gray-300 rounded-md" /> {/* Team Name */}
+                                        <Skeleton className="h-8 w-16 bg-gray-300 rounded-md" /> {/* Points */}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
+
 
                     }>
                         <LeagueTable league={league} season={season} />
