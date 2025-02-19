@@ -69,6 +69,7 @@ export default function UpcomingMatches() {
     const [upcoming_matches_all, setUpcomingMatchesAll] = useState<UpcomingMatchesTypeNull[]>([]);
 
     const [count, setCount] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
     // const upcoming_matches_length = upcoming_matches.length
     const upcoming_matches_length = upcoming_matches ? upcoming_matches.length : 0
 
@@ -84,15 +85,24 @@ export default function UpcomingMatches() {
 
 
     function addOne() {
-        setCount(count + 1)
+        if (count < upcoming_matches_length - 1) {
+            setIsAnimating(true);
+            setTimeout(() => {
+                setCount(count + 1);
+                setIsAnimating(false);
+            }, 300); // Match this with the CSS transition duration
+        }
     }
 
 
     function subtractOne() {
-        setCount(count - 1)
-
-        // console.log(user_league_code)
-        // console.log(user_team)
+        if (count > 0) {
+            setIsAnimating(true);
+            setTimeout(() => {
+                setCount(count - 1);
+                setIsAnimating(false);
+            }, 300);
+        }
     }
 
     function formatDate(date: string | Date): string {
@@ -182,66 +192,68 @@ export default function UpcomingMatches() {
     if (upcoming_matches.length > 0) {
         return (
             <>
-                <div className="bg-background rounded-lg">
+                <div className="bg-background rounded-lg motion-preset-slide-right">
                     <div className="p-4 text-xs">
                         <div className=" p-1 text-sm font-semibold border-b-2">
                             <h2>Upcoming Matches</h2>
 
                         </div>
+                        <div className={`transition-opacity duration-200 ease-in-out ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
 
-                        <div className="flex justify-center font-semibold pt-5">
-                            {upcoming_matches[count]?.league}
-                        </div>
-                        <div className="flex justify-center text-gray-400 mb-5">
-                            {upcoming_matches[count]?.date && formatDate(upcoming_matches[count]?.date)}
-                        </div>
-
-                        <div className="flex justify-around ">
-                            <div className="flex flex-col justify-center text-center w-1/2">
-                                <div className="mx-auto">
-                                    {/* <img src="dortmund.png" className="object-contain" alt="" width="50" height="50" /> */}
-                                    <Image
-                                        // src="/images/teams/{(row?.country)}.concat{(row?.team)}.png"
-                                        src={"/images/teams/" + upcoming_matches[count]?.home_country + " - " + upcoming_matches[count]?.home_team + ".png"}
-
-                                        width={50}
-                                        height={50}
-                                        className="object-contain"
-                                        alt="Picture of the author"
-                                    />
-                                </div>
-                                <div className="transition  ease-in-out delay-150 font-semibold">{upcoming_matches[count]?.home_team_short}</div>
-                                <div className="text-gray-400">{Number(upcoming_matches[count]?.home_cumulative_points) + " Point"}</div>
+                            <div className="flex justify-center font-semibold pt-5">
+                                {upcoming_matches[count]?.league}
                             </div>
-                            <div style={{ height: '50px', width: '2px' }} className=" bg-gray-100 mt-4 dark:bg-muted"></div>
-                            <div className="flex flex-col justify-center text-center w-1/2">
-                                <div className="mx-auto">
-                                    {/* <img src="rbl.png" className="object-contain" alt="" width="50" height="50" /> */}
-                                    <Image
-                                        // src="/images/teams/{(row?.country)}.concat{(row?.team)}.png"
-                                        src={"/images/teams/" + upcoming_matches[count]?.away_country + " - " + upcoming_matches[count]?.away_team + ".png"}
-
-                                        width={50}
-                                        height={50}
-                                        className="object-contain"
-                                        alt="Picture of the author"
-                                    />
-                                </div>
-                                <div className="font-semibold">{upcoming_matches[count]?.away_team_short}</div>
-                                <div className="text-gray-400">{Number(upcoming_matches[count]?.away_cumulative_points) + " Point"} </div>
+                            <div className="flex justify-center text-gray-400 mb-5">
+                                {upcoming_matches[count]?.date && formatDate(upcoming_matches[count]?.date)}
                             </div>
 
-                        </div>
+                            <div className="flex justify-around ">
+                                <div className="flex flex-col justify-center text-center w-1/2">
+                                    <div className="mx-auto">
+                                        {/* <img src="dortmund.png" className="object-contain" alt="" width="50" height="50" /> */}
+                                        <Image
+                                            // src="/images/teams/{(row?.country)}.concat{(row?.team)}.png"
+                                            src={"/images/teams/" + upcoming_matches[count]?.home_country + " - " + upcoming_matches[count]?.home_team + ".png"}
 
-                        <div className="flex justify-between text-gray-400 m-2 pt-3">
-                            <div>{upcoming_matches[count]?.prob1 && Math.round(upcoming_matches[count]?.prob1 * 100).toString() + "%"}</div>
-                            <div>{upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100).toString() + "%"}</div>
-                        </div>
+                                            width={50}
+                                            height={50}
+                                            className="object-contain"
+                                            alt="Picture of the author"
+                                        />
+                                    </div>
+                                    <div className="transition  ease-in-out delay-150 font-semibold">{upcoming_matches[count]?.home_team_short}</div>
+                                    <div className="text-gray-400">{Number(upcoming_matches[count]?.home_cumulative_points) + " Point"}</div>
+                                </div>
+                                <div style={{ height: '50px', width: '2px' }} className=" bg-gray-100 mt-4 dark:bg-muted"></div>
+                                <div className="flex flex-col justify-center text-center w-1/2">
+                                    <div className="mx-auto">
+                                        {/* <img src="rbl.png" className="object-contain" alt="" width="50" height="50" /> */}
+                                        <Image
+                                            // src="/images/teams/{(row?.country)}.concat{(row?.team)}.png"
+                                            src={"/images/teams/" + upcoming_matches[count]?.away_country + " - " + upcoming_matches[count]?.away_team + ".png"}
 
-                        <div className="flex justify-between pb-10">
-                            <div style={{ width: (upcoming_matches[count]?.prob1 && Math.round(upcoming_matches[count]?.prob1 * 100).toString()) + "%", backgroundColor: 'rgb(44,86,235)' }} className="h-2 ml-2 rounded-l-lg"></div>
-                            <div style={{ width: (upcoming_matches[count]?.prob_draw && Math.round(upcoming_matches[count]?.prob_draw * 100).toString()) + "%" }} className="h-2 bg-gray-200 ml-0.5 mr-0.5 dark:bg-muted"></div>
-                            <div style={{ width: (upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100).toString()) + "%", backgroundColor: '#FA4265' }} className="h-2 mr-2 rounded-r-lg "></div>
+                                            width={50}
+                                            height={50}
+                                            className="object-contain"
+                                            alt="Picture of the author"
+                                        />
+                                    </div>
+                                    <div className="font-semibold">{upcoming_matches[count]?.away_team_short}</div>
+                                    <div className="text-gray-400">{Number(upcoming_matches[count]?.away_cumulative_points) + " Point"} </div>
+                                </div>
+
+                            </div>
+
+                            <div className="flex justify-between text-gray-400 m-2 pt-3">
+                                <div>{upcoming_matches[count]?.prob1 && Math.round(upcoming_matches[count]?.prob1 * 100).toString() + "%"}</div>
+                                <div>{upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100).toString() + "%"}</div>
+                            </div>
+
+                            <div className="flex justify-between pb-10">
+                                <div style={{ width: (upcoming_matches[count]?.prob1 && Math.round(upcoming_matches[count]?.prob1 * 100).toString()) + "%", backgroundColor: 'rgb(44,86,235)' }} className="h-2 ml-2 rounded-l-lg"></div>
+                                <div style={{ width: (upcoming_matches[count]?.prob_draw && Math.round(upcoming_matches[count]?.prob_draw * 100).toString()) + "%" }} className="h-2 bg-gray-200 ml-0.5 mr-0.5 dark:bg-muted"></div>
+                                <div style={{ width: (upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100).toString()) + "%", backgroundColor: '#FA4265' }} className="h-2 mr-2 rounded-r-lg "></div>
+                            </div>
                         </div>
                         <div className=" flex justify-between gap-2 ">
                             {/* <button className="border w-16 rounded-lg p-2"
