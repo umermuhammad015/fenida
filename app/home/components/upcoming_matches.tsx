@@ -303,7 +303,7 @@ export default function UpcomingMatches() {
                                                     )} key={i} >
                                                         <TableCell>
                                                             <div>{row?.date && formatDate(row?.date)}</div>
-                                                            <div className="text-center">{(row?.time)}</div>
+                                                            {/* <div className="text-center">{(row?.time)}</div> */}
                                                         </TableCell>
                                                         <TableCell>
                                                             <div className="flex gap-2 items-center">
