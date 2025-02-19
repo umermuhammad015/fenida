@@ -164,8 +164,8 @@ async function fetchStandings(league: string, season: string): Promise<standings
 // export default async function LeagueTable({ league, season }: LeagueTableProps) {
 export default async function LeagueTable({ league, season }: LeagueTableProps) {
 
-    console.log(league)
-    console.log(season)
+    // console.log(league)
+    // console.log(season)
 
     const league_table = await fetchStandings(league, season);
     // const league_table = [
@@ -812,7 +812,7 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
                     ORDER BY date DESC
                     ) as row_num
                 FROM fenida_fenida.points_long 
-                WHERE league_start_year = 2024 AND status = 'completed' AND league_code IN ('ENG1')
+                WHERE league_start_year = 2024 AND status = 'completed' AND league_code IN ('ENG1','GRE1','POR1')
                 ) ranked_teams
                 WHERE row_num <= 5
                 ORDER BY team, date ASC;

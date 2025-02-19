@@ -198,7 +198,7 @@ export default function UpcomingMatches() {
                             <h2>Upcoming Matches</h2>
 
                         </div>
-                        <div className={`transition-opacity duration-200 ease-in-out ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
+                        <div className={`transition-opacity duration-300 ease-in-out ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
 
                             <div className="flex justify-center font-semibold pt-5">
                                 {upcoming_matches[count]?.league}

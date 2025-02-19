@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from 'react'
 import { useQueryState, } from 'nuqs'
 import FetchTeams from './Fetchteams';
-import FetchSeason from './fetchSeason';
+// import FetchSeason from './fetchSeason';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-type SeasonType = {
-    league_start_year: bigint | null;
-};
+// type SeasonType = {
+//     league_start_year: bigint | null;
+// };
 
 // type TeamType = {
 //     team: string | null;
@@ -39,7 +39,7 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
             shallow: false,
             scroll: false,
         });
-    const [seasonsList, setSeasonsList] = useState<SeasonType[] | null>(null);
+    // const [seasonsList, setSeasonsList] = useState<SeasonType[] | null>(null);
 
     // const [league, setLeague] = useState<any>(user_league_code || 'ENG1');
     // const [league, setLeague] = useQueryState("league",
@@ -60,14 +60,6 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
         }
     );
 
-    // const defaultTeam = league === "ENG1"
-    //     ? "Nottingham Forest"
-    //     : league === "GER1"
-    //         ? "Olympiakos Piraeus"
-    //         : league === "POR1"
-    //             ? "Rio Ave"
-    //             : "Nottingham Forest"; // Default fallback
-
     const [team, setTeam] = useQueryState("team", {
         defaultValue: user_team || "Nottingham Forest",
         shallow: false,
@@ -79,30 +71,28 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
 
     useEffect(() => {
 
-        // console.log("FetchLeagueCodes() useEffect")
 
 
+        // const fetchSeasons = async () => {
+        //     // console.log("fetchData() in FetchLeagueCodes() useEffect")
 
-        const fetchSeasons = async () => {
-            // console.log("fetchData() in FetchLeagueCodes() useEffect")
+        //     try {
+        //         // console.log("tring fetching league code")
 
-            try {
-                // console.log("tring fetching league code")
+        //         const all_seasons = await FetchSeason()
 
-                const all_seasons = await FetchSeason()
+        //         // console.log("seasons list");
+        //         // console.log(all_seasons);
 
-                // console.log("seasons list");
-                // console.log(all_seasons);
+        //         setSeasonsList(all_seasons);
 
-                setSeasonsList(all_seasons);
+        //     } catch (error) {
 
-            } catch (error) {
-
-                console.error('Error fetching league codes list:', error);
-            } finally {
-                setLoading(false)
-            }
-        };
+        //         console.error('Error fetching league codes list:', error);
+        //     } finally {
+        //         setLoading(false)
+        //     }
+        // };
 
         const fetchLeagues = async () => {
             // console.log("fetchData() in FetchLeagueCodes() useEffect")
@@ -132,8 +122,6 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
 
 
                 const uniqueTeams = [...new Set(teams.map(item => item.team))];
-                // console.log("teams list");
-                // console.log(uniqueTeams);
                 if (uniqueTeams.includes("Nottingham Forest")) {
                     setTeam("Nottingham Forest")
                 } else if (uniqueTeams.includes("Rio Ave")) {
@@ -143,8 +131,6 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
                 }
                 setTeamsList(uniqueTeams);
 
-                // if(teamsList?.includes("Nottingham Forest")){}
-
             } catch (error) {
 
                 console.error('Error fetching teams list:', error);
@@ -153,89 +139,88 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
             }
         };
 
-        fetchSeasons();
+        // fetchSeasons();
         fetchLeagues();
         fetchTeams();
 
     }, [season, league]);
 
-    async function onSeasonChange(value: string) {
+    // async function onSeasonChange(value: string) {
 
-        const newSeason = value;
-        setSeason(newSeason);
+    //     const newSeason = value;
+    //     setSeason(newSeason);
 
-        // Update or add the season parameter
-        // params.set('season', newSeason);
+    //     // Update or add the season parameter
+    //     params.set('season', newSeason);
 
-        // Remove team parameter if it exists
-        params.delete('team');
+    //     // Remove team parameter if it exists
+    //     params.delete('team');
 
-        // Remove team parameter if it exists
-        params.delete('league_code');
-
-        // Push the new URL with updated search params
-        // router.push(`?${params.toString()}`);
-
-
-        const fetchSeasons = async () => {
-            // console.log("fetchData() in FetchLeagueCodes() useEffect")
-
-            try {
-                // console.log("tring fetching league code")
-
-                const all_seasons = await FetchSeason()
-
-                // console.log("seasons list");
-                // console.log(all_seasons);
-
-                setSeasonsList(all_seasons);
-
-            } catch (error) {
-
-                console.error('Error fetching league codes list:', error);
-            } finally {
-                setLoading(false)
-            }
-        };
+    //     // Remove team parameter if it exists
+    //     params.delete('league_code');
 
 
 
-        const fetchTeams = async () => {
-            setLoadingTeams(true)
-            try {
-                const teams = await FetchTeams(Number(season), league)
 
-                // console.log("teams list");
-                // console.log(teams);
+    //     // const fetchSeasons = async () => {
+    //     //     // console.log("fetchData() in FetchLeagueCodes() useEffect")
 
-                const uniqueTeams = [...new Set(teams.map(item => item.team))];
-                // console.log("teams list");
-                // console.log(uniqueTeams);
-                if (uniqueTeams.includes("Nottingham Forest")) {
-                    setTeam("Nottingham Forest")
-                } else if (uniqueTeams.includes("Rio Ave")) {
-                    setTeam("Rio Ave")
-                } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
-                    setTeam("Olympiakos Piraeus")
-                }
+    //     //     try {
+    //     //         // console.log("tring fetching league code")
 
-                setTeamsList(uniqueTeams);
+    //     //         const all_seasons = await FetchSeason()
+
+    //     //         // console.log("seasons list");
+    //     //         // console.log(all_seasons);
+
+    //     //         setSeasonsList(all_seasons);
+
+    //     //     } catch (error) {
+
+    //     //         console.error('Error fetching league codes list:', error);
+    //     //     } finally {
+    //     //         setLoading(false)
+    //     //     }
+    //     // };
 
 
-                // setTeamsList(teams);
-            } catch (error) {
 
-                console.error('Error fetching teams list:', error);
-            } finally {
-                setLoadingTeams(false)
-            }
-        };
+    //     const fetchTeams = async () => {
+    //         setLoadingTeams(true)
+    //         try {
+    //             const teams = await FetchTeams(Number(season), league)
 
-        fetchSeasons();
-        // fetchLeagues();
-        fetchTeams();
+    //             // console.log("teams list");
+    //             // console.log(teams);
 
-    };
+    //             const uniqueTeams = [...new Set(teams.map(item => item.team))];
+    //             // console.log("teams list");
+    //             // console.log(uniqueTeams);
+    //             if (uniqueTeams.includes("Nottingham Forest")) {
+    //                 setTeam("Nottingham Forest")
+    //             } else if (uniqueTeams.includes("Rio Ave")) {
+    //                 setTeam("Rio Ave")
+    //             } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
+    //                 setTeam("Olympiakos Piraeus")
+    //             }
+
+    //             setTeamsList(uniqueTeams);
+
+
+    //             // setTeamsList(teams);
+    //         } catch (error) {
+
+    //             console.error('Error fetching teams list:', error);
+    //         } finally {
+    //             setLoadingTeams(false)
+    //         }
+    //     };
+
+    //     // fetchSeasons();
+    //     // fetchLeagues();
+    //     fetchTeams();
+
+    // };
 
 
     function onLeagueChange(value: string) {
@@ -364,7 +349,7 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
                 }}>Check </button> */}
                 <div className="flex gap-2 rounded-lg mt-2">
                     {/* season */}
-                    <div className="">
+                    {/* <div className="">
                         <label htmlFor="">
                             Season
                         </label>
@@ -384,7 +369,7 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
                                     </SelectItem>))}
                             </SelectContent>
                         </Select>
-                    </div>
+                    </div> */}
 
                     {/* League */}
                     <div className="">
@@ -434,7 +419,7 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
                                     </label>
                                     <Select value={team} onValueChange={setTeam}>
                                         <SelectTrigger
-                                            className="py-2 font-medium bg-background rounded-lg xs:w-24 md:w-24 lg:w-24 xl:w-40">
+                                            className="py-2 font-medium bg-background rounded-lg xs:w-24 md:w-24 lg:w-60">
                                             <SelectValue placeholder="Select Team" />
                                         </SelectTrigger>
                                         <SelectContent className='rounded-lg'>
