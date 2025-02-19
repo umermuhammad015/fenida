@@ -134,11 +134,11 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
                 const uniqueTeams = [...new Set(teams.map(item => item.team))];
                 // console.log("teams list");
                 // console.log(uniqueTeams);
-                if(uniqueTeams.includes("Nottingham Forest")){
+                if (uniqueTeams.includes("Nottingham Forest")) {
                     setTeam("Nottingham Forest")
-                } else if(uniqueTeams.includes("Rio Ave")){
+                } else if (uniqueTeams.includes("Rio Ave")) {
                     setTeam("Rio Ave")
-                } else if(uniqueTeams.includes("Olympiakos Piraeus")){
+                } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
                     setTeam("Olympiakos Piraeus")
                 }
                 setTeamsList(uniqueTeams);
@@ -211,11 +211,11 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
                 const uniqueTeams = [...new Set(teams.map(item => item.team))];
                 // console.log("teams list");
                 // console.log(uniqueTeams);
-                if(uniqueTeams.includes("Nottingham Forest")){
+                if (uniqueTeams.includes("Nottingham Forest")) {
                     setTeam("Nottingham Forest")
-                } else if(uniqueTeams.includes("Rio Ave")){
+                } else if (uniqueTeams.includes("Rio Ave")) {
                     setTeam("Rio Ave")
-                } else if(uniqueTeams.includes("Olympiakos Piraeus")){
+                } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
                     setTeam("Olympiakos Piraeus")
                 }
 
@@ -271,11 +271,11 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
                     const uniqueTeams = [...new Set(teams.map(item => item.team))];
                     // console.log("teams list");
                     // console.log(uniqueTeams);
-                    if(uniqueTeams.includes("Nottingham Forest")){
+                    if (uniqueTeams.includes("Nottingham Forest")) {
                         setTeam("Nottingham Forest")
-                    } else if(uniqueTeams.includes("Rio Ave")){
+                    } else if (uniqueTeams.includes("Rio Ave")) {
                         setTeam("Rio Ave")
-                    } else if(uniqueTeams.includes("Olympiakos Piraeus")){
+                    } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
                         setTeam("Olympiakos Piraeus")
                     }
                     setTeamsList(uniqueTeams);
@@ -362,31 +362,15 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
                     console.log(league)
                     console.log(team)
                 }}>Check </button> */}
-                <div className="flex gap-2 rounded-lg  mt-2">
-                    {/* {team} */}
-
-                    {/* <select
-                        className="w-24 h-10 px-3 rounded-lg border border-gray-200 bg-white text-gray-700 font-medium cursor-pointer hover:border-gray-300 focus:outline-none focus:ring-2
-                        focus:ring-blue-100 focus:border-blue-500 transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:border-gray-600"
-                        value={season}
-                        onChange={onSeasonChange}
-                    >
-                        {seasonsList.length > 0 && seasonsList.map((season: any, index: number) => (
-                            <option
-                                key={index}
-                                className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
-                            >
-                                {season.league_start_year}
-                            </option>
-                        ))}
-                    </select> */}
+                <div className="flex gap-2 rounded-lg mt-2">
+                    {/* season */}
                     <div className="">
                         <label htmlFor="">
                             Season
                         </label>
 
                         <Select value={season} onValueChange={onSeasonChange}>
-                            <SelectTrigger className="w-40 py-2 font-medium bg-background rounded-lg">
+                            <SelectTrigger className="py-2 font-medium bg-background rounded-lg xs:w-24 md:w-24 lg:w-24 xl:w-40">
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent className='rounded-lg'>
@@ -402,31 +386,13 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
                         </Select>
                     </div>
 
-                    {/* <select
-                        className="w-24 h-10 px-3 rounded-lg border border-gray-200 bg-white text-gray-700 font-medium cursor-pointer hover:border-gray-300 focus:outline-none focus:ring-2
-                        focus:ring-blue-100 focus:border-blue-500 transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:border-gray-600"
-                        value={league}
-                        onChange={onLeagueChange}
-                    >
-                        <option
-                            key={"ENG1"}
-                            className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
-                        >ENG1</option>
-                        <option
-                            key={"GRE1"}
-                            className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
-                        >GRE1</option>
-                        <option
-                            key={"POR1"}
-                            className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
-                        >POR1</option>
-                    </select> */}
+                    {/* League */}
                     <div className="">
                         <label htmlFor="">
                             League
                         </label>
                         <Select value={league} onValueChange={onLeagueChange}>
-                            <SelectTrigger className="w-40 py-2 font-medium bg-background rounded-lg">
+                            <SelectTrigger className="py-2 font-medium bg-background rounded-lg xs:w-24 md:w-24 lg:w-24 xl:w-40">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent className='rounded-lg'>
@@ -456,73 +422,36 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
                         </Select>
                     </div>
 
-                    {/* <select className="select border w-20 dark:bg-muted h-10 rounded-lg p-1"
-                        value={league}
-                        onChange={onLeagueChange}>
-
-                        
-                        {leagueCodesList.length > 0 && leagueCodesList.map((lc: any, i: any) => <option className="text-primary" key={i}>{lc.league_code}</option>)}
-
-
-                    </select> */}
+                    {/* team */}
 
                     {
                         !loadingTeams ?
                             <>
-                                <div className="flex flex-col gap-1">
-                                    <div className="">
-                                        <label htmlFor="">
-                                            Team
-                                        </label>
-                                        <Select value={team} onValueChange={setTeam}>
-                                            <SelectTrigger
-                                                className="w-40 py-2 font-medium bg-background rounded-lg">
-                                                <SelectValue placeholder="Select Team" />
-                                            </SelectTrigger>
-                                            <SelectContent className='rounded-lg'>
-                                                {(teamsList.length > 0) && teamsList.map((teamItem, index: number) => (
-                                                    <SelectItem
-                                                        key={index}
-                                                        value={teamItem as string}
 
-                                                    // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
-                                                    >
-                                                        {teamItem}
-                                                    </SelectItem>))}
-                                            </SelectContent>
-                                        </Select>
-                                        {/* <select
-                                            className="w-40 h-10 px-3 rounded-lg border border-gray-200 bg-white text-gray-700 font-medium cursor-pointer hover:border-gray-300 focus:outline-none focus:ring-2
-                        focus:ring-blue-100 focus:border-blue-500 transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:border-gray-600"
-                                            value={team}
-                                            onChange={onTeamChange}
-                                        // onChange={() => setTeam}
-                                        >
-                                            {teamsList.length > 0 && teamsList.map((team: any, index: number) => (
-                                                <option
+                                <div className="">
+                                    <label htmlFor="">
+                                        Team
+                                    </label>
+                                    <Select value={team} onValueChange={setTeam}>
+                                        <SelectTrigger
+                                            className="py-2 font-medium bg-background rounded-lg xs:w-24 md:w-24 lg:w-24 xl:w-40">
+                                            <SelectValue placeholder="Select Team" />
+                                        </SelectTrigger>
+                                        <SelectContent className='rounded-lg'>
+                                            {(teamsList.length > 0) && teamsList.map((teamItem, index: number) => (
+                                                <SelectItem
                                                     key={index}
-                                                    className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
-                                                >
-                                                    {team.team}
-                                                </option>
-                                            ))}
-                                        </select> */}
-                                    </div>
-                                </div>
-                                {/* <Select
-                                    value={team}
-                                    onValueChange={onTeamChange}>
-                                    <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Select a Team" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>Select Team</SelectLabel>
-                                            {teamsList.length > 0 && teamsList.map((t: any, i: any) => <SelectItem key={i}>{t.team}</SelectItem>)}
+                                                    value={teamItem as string}
 
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select> */}
+                                                // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
+                                                >
+                                                    {teamItem}
+                                                </SelectItem>))}
+                                        </SelectContent>
+                                    </Select>
+
+                                </div>
+
                             </> : <>Loading...</>
                     }
 

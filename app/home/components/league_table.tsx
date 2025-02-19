@@ -1957,14 +1957,14 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
         <>
 
 
-            <div className=" shadow-none rounded-lg text-xs">
-                <div className="">
-                    <div className="flex justify-between bg-background rounded-t-lg  w-full p-4  ">
+            <div className="shadow-none rounded-lg text-xs">
+                <div>
+                    <div className="flex justify-between bg-background rounded-t-lg  w-full p-4">
                         <div className="p-2 text-sm font-semibold">League Table</div>
                         {/* <FetchLeague /> */}
                     </div>
 
-                    <div className="w-full  border-t h-full pb-6">
+                    <div className="w-full border-t h-full pb-6">
                         <Table id="eng1-table" className="table-auto w-full bg-background rounded">
                             <TableHeader>
                                 <TableRow className=' text-xs my-8'>
