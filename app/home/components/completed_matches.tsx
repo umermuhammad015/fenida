@@ -294,7 +294,7 @@ export default function CompletedMatches() {
 
                                                             </TableCell>
                                                             <TableCell>
-                                                                <div className="flex gap-2 items-center font-semibold">
+                                                                <div className="flex gap-2 items-center">
                                                                     <Image
                                                                         // src="/images/teams/{(row?.country)}.concat{(row?.team)}.png"
                                                                         src={"/images/teams/" + row?.home_country + " - " + row?.home_team + ".png"}

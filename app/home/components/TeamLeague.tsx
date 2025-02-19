@@ -33,12 +33,12 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
     // const [loading, setLoading] = useState(true);
 
     // const [season, setSeason] = useState(league_start_year || 2024);
-    const [season, setSeason] = useQueryState("season",
-        {
-            defaultValue: league_start_year || "2024",
-            shallow: false,
-            scroll: false,
-        });
+    // const [season, setSeason] = useQueryState("season",
+    //     {
+    //         defaultValue: league_start_year || "2024",
+    //         shallow: false,
+    //         scroll: false,
+    //     });
     // const [seasonsList, setSeasonsList] = useState<SeasonType[] | null>(null);
 
     // const [league, setLeague] = useState<any>(user_league_code || 'ENG1');
@@ -117,7 +117,8 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
         const fetchTeams = async () => {
             setLoadingTeams(true)
             try {
-                const teams = await FetchTeams(Number(season), league)
+                const teams = await FetchTeams(league)
+                // const teams = await FetchTeams(Number(season), league)
 
 
 
@@ -143,7 +144,8 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
         fetchLeagues();
         fetchTeams();
 
-    }, [season, league]);
+    }, [league]);
+    // }, [season, league]);
 
     // async function onSeasonChange(value: string) {
 
@@ -248,7 +250,8 @@ export default function FetchTeamLeague({ league_start_year, user_league_code, u
             const fetchTeams = async () => {
                 try {
                     setLoadingTeams(true)
-                    const teams = await FetchTeams(Number(season), league)
+                    // const teams = await FetchTeams(Number(season), league)
+                    const teams = await FetchTeams(league)
 
                     // console.log("teams list");
                     // console.log(teams);

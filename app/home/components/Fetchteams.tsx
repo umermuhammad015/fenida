@@ -2,7 +2,8 @@
 
 import { prisma } from '@/app/db';
 
-export default async function FetchTeams(season: number, league_code: string) {
+export default async function FetchTeams(league_code: string) {
+// export default async function FetchTeams(season: number, league_code: string) {
 
     const teams = await prisma.points_long.findMany({
         distinct: ['team'],
@@ -11,7 +12,7 @@ export default async function FetchTeams(season: number, league_code: string) {
         },
         where: {
             // position: { in: ['GK', 'LB'] },
-            league_start_year: season,
+            // league_start_year: season,
             league_code: league_code,
         },
         orderBy: [
