@@ -6,7 +6,7 @@ export default function Home() {
   return (
 
     <main className="container justify-between p-24">
-      hi
+
       {/* <UpcomingMatches /> */}
 
 
