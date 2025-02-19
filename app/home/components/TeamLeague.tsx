@@ -20,7 +20,8 @@ type Teamleague = {
     user_team: string | null;
 }
 
-export default function FetchTeamLeague({ league_start_year, user_league_code, user_team }: Teamleague) {
+export default function FetchTeamLeague({ user_league_code, user_team }: Teamleague) {
+// export default function FetchTeamLeague({ league_start_year, user_league_code, user_team }: Teamleague) {
 
     // console.log("component renderd")
     const router = useRouter();
