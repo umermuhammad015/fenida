@@ -273,9 +273,9 @@ export default function UpcomingMatches() {
                             </button>
                             <Dialog>
                                 <DialogTrigger asChild>
-                                    <Button className="border w-16 bg-blue-700 text-white p-2 rounded-lg">Details</Button>
+                                    <Button className="border w-16 bg-blue-700 text-white p-2 rounded-lg scroll-none">Details</Button>
                                 </DialogTrigger>
-                                <DialogContent className="overflow-y-scroll max-h-screen lg:max-w-[50%] md:max-w-[60%] sm:max-w-[80%] xs:max-w-[90%]">
+                                <DialogContent className="overflow-y-scroll max-h-[70%] lg:max-w-[50%] md:max-w-[60%] sm:max-w-[80%] xs:max-w-[90%]">
 
                                     <div className=" bg-background rounded-xl">
                                         <div className=" p-1 text-sm font-semibold border-b-2 flex justify-between">

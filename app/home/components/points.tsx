@@ -93,7 +93,7 @@ export default function Points() {
                                         </svg>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Homes</p>
+                                    Home
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
@@ -108,7 +108,7 @@ export default function Points() {
                                         </div>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Away</p>
+                                        Away
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
