@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import Image from 'next/image'
 import { clsx } from 'clsx';
 import { useSearchParams } from 'next/navigation'
+import { motion, AnimatePresence } from 'framer-motion';
 
 import fetchCompletedMatches from './fetchCompletedMatches';
 
@@ -22,7 +23,23 @@ import {
 } from "@/components/ui/dialog"
 import CompletedSkeleton from './completed_skeleton';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-// import { motion } from 'framer-motion';
+
+// SlidingNumber component for animated number transitions
+const SlidingNumber = ({ value }: { value: number | string | null | undefined }) => {
+    if (value === null || value === undefined) return <span>0</span>;
+
+    return (
+        <motion.span
+            key={value.toString()}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -20, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+            {value}
+        </motion.span>
+    );
+};
 
 interface CompletedMatch {
     away_country: string | null;
@@ -43,16 +60,12 @@ interface CompletedMatch {
     tie_prob: number | null;
 }
 
-
-
 export default function CompletedMatches() {
     const searchParams = useSearchParams()
     const [isLoading, setIsLoading] = useState(true);
     const [completed_matches, setCompletedMatches] = useState<CompletedMatch[] | null>(null);
     const [completed_matches_count, set_completed_matches_count] = useState(0);
-
-    // const [value, setValue] = useState(0);
-
+    const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
 
     const completed_matches_length = completed_matches ? completed_matches.length : 0
 
@@ -61,12 +74,14 @@ export default function CompletedMatches() {
 
     function show_previous() {
         if (completed_matches_count < completed_matches_length - 1) {
+            setSlideDirection('left');
             set_completed_matches_count(completed_matches_count + 1);
         }
     }
 
     function show_next() {
         if (completed_matches_count > 0) {
+            setSlideDirection('right');
             set_completed_matches_count(completed_matches_count - 1);
         }
     }
@@ -84,6 +99,7 @@ export default function CompletedMatches() {
         }
         return [day, month, year].join(' ');
     }
+
     useEffect(() => {
         setIsLoading(true)
         const fetchData = async () => {
@@ -98,6 +114,22 @@ export default function CompletedMatches() {
         fetchData();
     }, [user_league_code, user_team]);
 
+    // Animation variants
+    const variants = {
+        enter: (direction: 'left' | 'right') => ({
+            x: direction === 'right' ? 300 : -300,
+            opacity: 0
+        }),
+        center: {
+            x: 0,
+            opacity: 1
+        },
+        exit: (direction: 'left' | 'right') => ({
+            x: direction === 'right' ? -300 : 300,
+            opacity: 0
+        })
+    };
+
     if (isLoading) {
         return <CompletedSkeleton />
     } else if (completed_matches) {
@@ -107,145 +139,166 @@ export default function CompletedMatches() {
                     <div className="p-1 text-sm font-semibold border-b-2">
                         <h2>Completed Matches</h2>
                     </div>
-                    <div>
-                        <div className="flex justify-between my-5">
-                            <div className="class">
-                                <div className="font-semibold">{completed_matches[completed_matches_count]?.league}</div>
-                                <div className="flex justify-center text-gray-400">
-                                    {completed_matches[completed_matches_count]?.date &&
-                                        formatDate(completed_matches[completed_matches_count]?.date)}
+                    <AnimatePresence initial={false} custom={slideDirection} mode="wait">
+                        <motion.div
+                            key={completed_matches_count}
+                            custom={slideDirection}
+                            variants={variants}
+                            initial="enter"
+                            animate="center"
+                            exit="exit"
+                            transition={{
+                                x: { type: "spring", stiffness: 300, damping: 30 },
+                                opacity: { duration: 0.2 }
+                            }}
+                        >
+                            <div className="flex justify-between my-5">
+                                <div className="class">
+                                    <div className="font-semibold">{completed_matches[completed_matches_count]?.league}</div>
+                                    <div className="flex justify-center text-gray-400">
+                                        {completed_matches[completed_matches_count]?.date &&
+                                            formatDate(completed_matches[completed_matches_count]?.date)}
+                                    </div>
+                                </div>
+
+                                <TooltipProvider>
+                                    <div className="flex">
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <div className={clsx(
+                                                    `w-14 text-center p-2 border bg-gray-100 rounded-l dark:bg-muted`,
+                                                    {
+                                                        'border-blue-600':
+                                                            completed_matches[completed_matches_count]?.home_goals !==
+                                                            completed_matches[completed_matches_count]?.away_goals &&
+                                                            completed_matches[completed_matches_count]?.home_team === user_team,
+                                                    }
+                                                )}>
+                                                    {completed_matches[completed_matches_count]?.home_win_prob && (
+                                                        <div className="inline-flex items-center justify-center">
+                                                            <SlidingNumber value={Math.round(completed_matches[completed_matches_count]?.home_win_prob * 100)} />%
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                {completed_matches[completed_matches_count]?.home_team === user_team ?
+                                                    "Probability of Win" : "Probability of Lose"}
+                                            </TooltipContent>
+                                        </Tooltip>
+
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <div className={clsx(
+                                                    `w-14 text-center p-2 border bg-gray-100 dark:bg-muted`,
+                                                    {
+                                                        'border-blue-600':
+                                                            completed_matches[completed_matches_count]?.home_goals ===
+                                                            completed_matches[completed_matches_count]?.away_goals,
+                                                    }
+                                                )}>
+                                                    {completed_matches[completed_matches_count]?.tie_prob && (
+                                                        <div className="inline-flex items-center justify-center">
+                                                            <SlidingNumber value={Math.round(completed_matches[completed_matches_count]?.tie_prob * 100)} />%
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                <div>Probability of Draw</div>
+                                            </TooltipContent>
+                                        </Tooltip>
+
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <div className={clsx(
+                                                    `w-14 text-center p-2 border bg-gray-100 rounded-r dark:bg-muted`,
+                                                    {
+                                                        'border-blue-600':
+                                                            completed_matches[completed_matches_count]?.home_goals !==
+                                                            completed_matches[completed_matches_count]?.away_goals &&
+                                                            completed_matches[completed_matches_count]?.away_team === user_team,
+                                                    }
+                                                )}>
+                                                    {completed_matches[completed_matches_count]?.away_win_prob && (
+                                                        <div className="inline-flex items-center justify-center">
+                                                            <SlidingNumber value={Math.round(completed_matches[completed_matches_count]?.away_win_prob * 100)} />%
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                {completed_matches[completed_matches_count]?.away_team === user_team ?
+                                                    "Probability of Win" : "Probability of Lose"}
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </div>
+                                </TooltipProvider>
+                            </div>
+
+                            <div className="flex justify-around font-semibold mb-4">
+                                <div className="flex flex-col justify-center items-center w-1/2">
+                                    <Image
+                                        src={"/images/teams/" + completed_matches[completed_matches_count]?.home_country + " - " +
+                                            completed_matches[completed_matches_count]?.home_team + ".png"}
+                                        width={50}
+                                        height={50}
+                                        className="object-contain"
+                                        alt="Picture of the author"
+                                    />
+                                    <div className="text-center">{completed_matches[completed_matches_count]?.home_team_short}</div>
+                                </div>
+
+                                <div className="flex justify-center items-center">
+                                    <motion.div className="text-xl bg-gray-100 p-2 rounded font-bold dark:bg-muted">
+                                        <SlidingNumber value={completed_matches[completed_matches_count]?.home_goals} />
+                                    </motion.div>
+                                    <div className="text-2xl mx-3 text-gray-400">:</div>
+                                    <motion.div className="text-xl bg-gray-100 p-2 rounded font-bold dark:bg-muted">
+                                        <SlidingNumber value={completed_matches[completed_matches_count]?.away_goals} />
+                                    </motion.div>
+                                </div>
+
+                                <div className="flex flex-col justify-center items-center w-1/2">
+                                    <Image
+                                        src={"/images/teams/" + completed_matches[completed_matches_count]?.away_country + " - " +
+                                            completed_matches[completed_matches_count]?.away_team + ".png"}
+                                        width={50}
+                                        height={50}
+                                        className="object-contain"
+                                        alt="Picture of the author"
+                                    />
+                                    <div className="text-center">{completed_matches[completed_matches_count]?.away_team_short}</div>
                                 </div>
                             </div>
 
-
-
-                            <TooltipProvider>
-                                <div className="flex">
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <div className={clsx(
-                                                `w-14 text-center p-2 border bg-gray-100 rounded-l dark:bg-muted`,
-                                                {
-                                                    'border-blue-600':
-                                                        completed_matches[completed_matches_count]?.home_goals !==
-                                                        completed_matches[completed_matches_count]?.away_goals &&
-                                                        completed_matches[completed_matches_count]?.home_team === user_team,
-                                                }
-                                            )}>
-                                                {completed_matches[completed_matches_count]?.home_win_prob &&
-                                                    Math.round(completed_matches[completed_matches_count]?.home_win_prob * 100).toString() + "%"}
-                                            </div>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            {completed_matches[completed_matches_count]?.home_team === user_team ?
-                                                "Probability of Win" : "Probability of Lose"}
-                                        </TooltipContent>
-                                    </Tooltip>
-
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <div className={clsx(
-                                                `w-14 text-center p-2 border bg-gray-100 dark:bg-muted`,
-                                                {
-                                                    'border-blue-600':
-                                                        completed_matches[completed_matches_count]?.home_goals ===
-                                                        completed_matches[completed_matches_count]?.away_goals,
-                                                }
-                                            )}>
-                                                {completed_matches[completed_matches_count]?.tie_prob &&
-                                                    Math.round(completed_matches[completed_matches_count]?.tie_prob * 100).toString() + "%"}
-                                            </div>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <div>Probability of Draw</div>
-                                        </TooltipContent>
-                                    </Tooltip>
-
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <div className={clsx(
-                                                `w-14 text-center p-2 border bg-gray-100 rounded-r dark:bg-muted`,
-                                                {
-                                                    'border-blue-600':
-                                                        completed_matches[completed_matches_count]?.home_goals !==
-                                                        completed_matches[completed_matches_count]?.away_goals &&
-                                                        completed_matches[completed_matches_count]?.away_team === user_team,
-                                                }
-                                            )}>
-                                                {completed_matches[completed_matches_count]?.away_win_prob &&
-                                                    Math.round(completed_matches[completed_matches_count]?.away_win_prob * 100).toString() + "%"}
-                                            </div>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            {completed_matches[completed_matches_count]?.away_team === user_team ?
-                                                "Probability of Win" : "Probability of Lose"}
-                                        </TooltipContent>
-                                    </Tooltip>
+                            <div className="flex justify-around mb-1 gap-1">
+                                <div className="flex justify-between bg-gray-100 w-1/2 rounded p-2 dark:bg-muted">
+                                    <div className="ml-1 text-gray-400">Shot-Based xG</div>
+                                    <div className="mr-1">
+                                        <SlidingNumber value={completed_matches[completed_matches_count]?.home_xg} />
+                                    </div>
                                 </div>
-                            </TooltipProvider>
-                        </div>
-
-                        {/* Rest of your component JSX remains the same */}
-                        {/* Teams, scores, xG stats sections */}
-
-                        <div className="flex justify-around font-semibold mb-4">
-                            <div className="flex flex-col justify-center items-center w-1/2">
-                                <Image
-                                    src={"/images/teams/" + completed_matches[completed_matches_count]?.home_country + " - " +
-                                        completed_matches[completed_matches_count]?.home_team + ".png"}
-                                    width={50}
-                                    height={50}
-                                    className="object-contain"
-                                    alt="Picture of the author"
-                                />
-                                <div className="text-center">{completed_matches[completed_matches_count]?.home_team_short}</div>
-                            </div>
-
-                            <div className="flex justify-center items-center">
-                                <div className="text-xl bg-gray-100 p-2 rounded font-bold dark:bg-muted">
-                                    {completed_matches[completed_matches_count]?.home_goals}
-                                </div>
-                                <div className="text-2xl mx-3 text-gray-400">:</div>
-                                <div className="text-xl bg-gray-100 p-2 rounded font-bold dark:bg-muted">
-                                    {completed_matches[completed_matches_count]?.away_goals}
+                                <div className="flex justify-between bg-gray-100 w-1/2 rounded p-2 dark:bg-muted">
+                                    <div className="ml-1 text-gray-400">Shot-Based xG</div>
+                                    <div className="mr-1">
+                                        <SlidingNumber value={completed_matches[completed_matches_count]?.away_xg} />
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="flex flex-col justify-center items-center w-1/2">
-                                <Image
-                                    src={"/images/teams/" + completed_matches[completed_matches_count]?.away_country + " - " +
-                                        completed_matches[completed_matches_count]?.away_team + ".png"}
-                                    width={50}
-                                    height={50}
-                                    className="object-contain"
-                                    alt="Picture of the author"
-                                />
-                                <div className="text-center">{completed_matches[completed_matches_count]?.away_team_short}</div>
+                            <div className="flex justify-around gap-1">
+                                <div className="flex justify-between bg-gray-100 w-1/2 rounded p-2 dark:bg-muted">
+                                    <div className="ml-1 text-gray-400">Non-Shot xG</div>
+                                    <div className="mr-1">0</div>
+                                </div>
+                                <div className="flex justify-between bg-gray-100 w-1/2 rounded p-2 dark:bg-muted">
+                                    <div className="text-gray-400">Non-Shot xG</div>
+                                    <div className="mr-1">0</div>
+                                </div>
                             </div>
-                        </div>
-
-                        <div className="flex justify-around mb-1 gap-1">
-                            <div className="flex justify-between bg-gray-100 w-1/2 rounded p-2 dark:bg-muted">
-                                <div className="ml-1 text-gray-400">Shot-Based xG</div>
-                                <div className="mr-1">{completed_matches[completed_matches_count]?.home_xg}</div>
-                            </div>
-                            <div className="flex justify-between bg-gray-100 w-1/2 rounded p-2 dark:bg-muted">
-                                <div className="ml-1 text-gray-400">Shot-Based xG</div>
-                                <div className="mr-1">{completed_matches[completed_matches_count]?.away_xg}</div>
-                            </div>
-                        </div>
-
-                        <div className="flex justify-around gap-1">
-                            <div className="flex justify-between bg-gray-100 w-1/2 rounded p-2 dark:bg-muted">
-                                <div className="ml-1 text-gray-400">Non-Shot xG</div>
-                                <div className="mr-1">0</div>
-                            </div>
-                            <div className="flex justify-between bg-gray-100 w-1/2 rounded p-2 dark:bg-muted">
-                                <div className="text-gray-400">Non-Shot xG</div>
-                                <div className="mr-1">0</div>
-                            </div>
-                        </div>
-                    </div>
+                        </motion.div>
+                    </AnimatePresence>
 
                     <div className="flex justify-between pt-6 gap-2">
                         <button
@@ -264,29 +317,21 @@ export default function CompletedMatches() {
                                 <Button className="border w-16 bg-blue-700 text-white p-2 rounded-lg">Details</Button>
                             </DialogTrigger>
                             <DialogContent className="overflow-y-scroll max-h-screen lg:max-w-[50%] md:max-w-[60%] sm:max-w-[80%] xs:max-w-[90%]">
-
                                 <div className="bg-background rounded-lg">
-                                    <div className=" p-1 text-sm font-semibold border-b-2 flex justify-between ">
+                                    <div className="p-1 text-sm font-semibold border-b-2 flex justify-between">
                                         <h2>Completed Matches</h2>
                                     </div>
-
-                                    <div className="">
-                                        <Table className="">
+                                    <div>
+                                        <Table>
                                             <TableBody>
                                                 {completed_matches.length > 0 && completed_matches.map((row: CompletedMatch, i: number) => (
-                                                    <TableRow key={i} className="h-16 w-[70%] cursor-pointer" >
-                                                        {/* <TableCell>
-                                        <div>{(row.date)}</div>
-                                        <div className="text-center">{(row.home_goals)}</div>
-                                    </TableCell> */}
+                                                    <TableRow key={i} className="h-16 w-[70%] cursor-pointer">
                                                         <TableCell>
                                                             <div>{row.date && formatDate(row.date)}</div>
-
                                                         </TableCell>
                                                         <TableCell>
                                                             <div className="flex gap-2 items-center">
                                                                 <Image
-                                                                    // src="/images/teams/{(row?.country)}.concat{(row?.team)}.png"
                                                                     src={"/images/teams/" + row?.home_country + " - " + row?.home_team + ".png"}
                                                                     width={25}
                                                                     height={25}
@@ -324,27 +369,19 @@ export default function CompletedMatches() {
                                                                 {row?.away_goals}
                                                             </div>
                                                         </TableCell>
-
-
                                                         <TableCell>
                                                             <div className="flex gap-2 justify-end">
                                                                 <div className="flex justify-center items-center">{(row?.away_team_short)}</div>
-
                                                                 <Image
-                                                                    // src="/images/teams/{(row?.country)}.concat{(row?.team)}.png"
                                                                     src={"/images/teams/" + row?.away_country + " - " + row?.away_team + ".png"}
                                                                     width={25}
                                                                     height={25}
                                                                     className="object-contain"
                                                                     alt="Picture of the author"
                                                                 />
-
                                                             </div>
-
                                                         </TableCell>
-
                                                         <TableCell className="flex justify-center items-center mt-3 gap-2">
-
                                                             <div className={clsx(
                                                                 `w-14 text-center p-2 border-2 bg-gray-100 rounded-l dark:bg-muted`,
                                                                 {
@@ -354,51 +391,24 @@ export default function CompletedMatches() {
                                                             )}>
                                                                 {row?.home_win_prob && Math.round(row?.home_win_prob * 100).toString() + "%"}
                                                             </div>
-                                                            <div className={clsx(`w-14 text-center p-2 border-2 bg-gray-100  dark:bg-muted`, {
+                                                            <div className={clsx(`w-14 text-center p-2 border-2 bg-gray-100 dark:bg-muted`, {
                                                                 'border-orange-600': row?.home_goals === row?.away_goals
-
-                                                            }
-                                                            )}>
+                                                            })}>
                                                                 {row?.tie_prob && Math.round(row?.tie_prob * 100).toString() + "%"}
                                                             </div>
                                                             <div className={clsx(`w-14 text-center p-2 border-2 bg-gray-100 rounded-r dark:bg-muted`, {
                                                                 'border-green-600': (row?.home_goals !== null && row?.away_goals !== null) && ((row?.home_goals < row?.away_goals) && (row?.away_team === user_team)),
                                                                 'border-red-600': (row?.home_goals !== null && row?.away_goals !== null) && ((row?.home_goals > (row?.away_goals) && row?.away_team === user_team))
-
-
-                                                            }
-                                                            )}>
+                                                            })}>
                                                                 {row?.away_win_prob && Math.round(row?.away_win_prob * 100).toString() + "%"}
                                                             </div>
-
-                                                            {/* <div className="w-12 h-9 bg-gray-100 dark:bg-muted rounded flex justify-center items-center">{Math.round(parseFloat(row.home_win_prob) * 100).toString() + "%"}</div>
-                                                                <div className="w-12 h-9 bg-gray-100 dark:bg-muted rounded flex justify-center items-center">{Math.round(parseFloat(row.tie_prob) * 100).toString() + "%"}</div>
-                                                                <div className="w-12 h-9 bg-gray-100 dark:bg-muted rounded flex justify-center items-center">{Math.round(parseFloat(row.away_win_prob) * 100).toString() + "%"}</div> */}
                                                         </TableCell>
-
-
                                                     </TableRow>
-
-
                                                 ))}
                                             </TableBody>
                                         </Table>
                                     </div>
                                 </div>
-                                {/* <section className="">
-                                        <div ref={ref}>
-                                            <Image
-                                                // src="/images/teams/{(row?.country)}.concat{(row?.team)}.png"
-                                                src={"/images/spinner/spinner2.gif"}
-                                                alt="spinner"
-                                                width={56}
-                                                height={56}
-                                                className="bg-none"
-
-                                            />
-                                        </div>
-
-                                    </section> */}
                             </DialogContent>
                         </Dialog>
 
