@@ -117,7 +117,7 @@ export default function CompletedMatches() {
                                 </div>
                             </div>
 
-                            
+
 
                             <TooltipProvider>
                                 <div className="flex">
@@ -298,20 +298,33 @@ export default function CompletedMatches() {
                                                         </TableCell>
                                                         <TableCell className="flex justify-center items-center mt-3 gap-2">
                                                             <div className={clsx(`w-10 h-9 dark:bg-muted rounded flex justify-center items-center`, {
-                                                                'text-green-600 bg-green-100': (row?.home_goals !== null && row?.away_goals !== null) && (row?.home_goals > row?.away_goals),
-                                                                'text-red-600 bg-red-100': (row?.home_goals !== null && row?.away_goals !== null) && (row?.home_goals < row?.away_goals),
+                                                                'text-green-600 bg-green-100': (row?.home_goals !== null && row?.away_goals !== null) && (
+                                                                    (row?.home_team === user_team && row?.home_goals > row?.away_goals) ||
+                                                                    (row?.away_team === user_team && row?.home_goals < row?.away_goals)
+                                                                ),
+                                                                'text-red-600 bg-red-100': (row?.home_goals !== null && row?.away_goals !== null) && (
+                                                                    (row?.home_team === user_team && row?.home_goals < row?.away_goals) ||
+                                                                    (row?.away_team === user_team && row?.home_goals > row?.away_goals)
+                                                                ),
                                                                 'text-orange-600 bg-orange-100': (row?.home_goals !== null && row?.away_goals !== null) && (row?.home_goals === row?.away_goals)
                                                             })}>
                                                                 {row?.home_goals}
                                                             </div>
                                                             <div className={clsx(`w-10 h-9 dark:bg-muted rounded flex justify-center items-center`, {
-                                                                'text-green-600 bg-green-100': (row?.home_goals !== null && row?.away_goals !== null) && (row?.home_goals > row?.away_goals),
-                                                                'text-red-600 bg-red-100': (row?.home_goals !== null && row?.away_goals !== null) && (row?.home_goals < row?.away_goals),
+                                                                'text-green-600 bg-green-100': (row?.home_goals !== null && row?.away_goals !== null) && (
+                                                                    (row?.home_team === user_team && row?.home_goals > row?.away_goals) ||
+                                                                    (row?.away_team === user_team && row?.home_goals < row?.away_goals)
+                                                                ),
+                                                                'text-red-600 bg-red-100': (row?.home_goals !== null && row?.away_goals !== null) && (
+                                                                    (row?.home_team === user_team && row?.home_goals < row?.away_goals) ||
+                                                                    (row?.away_team === user_team && row?.home_goals > row?.away_goals)
+                                                                ),
                                                                 'text-orange-600 bg-orange-100': (row?.home_goals !== null && row?.away_goals !== null) && (row?.home_goals === row?.away_goals)
                                                             })}>
                                                                 {row?.away_goals}
                                                             </div>
                                                         </TableCell>
+
 
                                                         <TableCell>
                                                             <div className="flex gap-2 justify-end">
