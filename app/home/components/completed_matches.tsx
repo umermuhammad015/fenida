@@ -138,7 +138,7 @@ export default function CompletedMatches() {
                                         </TooltipTrigger>
                                         <TooltipContent>
                                             {completed_matches[completed_matches_count]?.home_team === user_team ?
-                                                "Probability of Win" : "Probability of Loss"}
+                                                "Probability of Win" : "Probability of Lose"}
                                         </TooltipContent>
                                     </Tooltip>
 
@@ -178,7 +178,7 @@ export default function CompletedMatches() {
                                         </TooltipTrigger>
                                         <TooltipContent>
                                             {completed_matches[completed_matches_count]?.away_team === user_team ?
-                                                "Probability of Win" : "Probability of Loss"}
+                                                "Probability of Win" : "Probability of Lose"}
                                         </TooltipContent>
                                     </Tooltip>
                                 </div>
