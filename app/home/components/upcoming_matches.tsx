@@ -272,15 +272,23 @@ export default function UpcomingMatches() {
                                             completed_matches[completed_matches_count]?.home_team === user_team,
                                     }
                                 )} */}
+                            {/* <div style={{ width: (upcoming_matches[count]?.prob1 && Math.round(upcoming_matches[count]?.prob1 * 100).toString()) + "%", backgroundColor: 'rgb(44,86,235)' }} className="h-2 ml-2 rounded-l-lg"></div>
+                            <div style={{ width: (upcoming_matches[count]?.prob_draw && Math.round(upcoming_matches[count]?.prob_draw * 100).toString()) + "%" }} className="h-2 bg-gray-200 ml-0.5 mr-0.5 dark:bg-muted"></div>
+                            <div style={{ width: (upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100).toString()) + "%", backgroundColor: '#FA4265' }} className="h-2 mr-2 rounded-r-lg "></div> */}
                             <div style={{
                                 width: (upcoming_matches[count]?.prob1 && Math.round(upcoming_matches[count]?.prob1 * 100).toString()) + "%",
-                                backgroundColor: 'rgb(44,86,235)'
-                            }}
-                                className="h-2 ml-2 rounded-l-lg">
+                                backgroundColor: upcoming_matches[count]?.home_team === user_team ? 'rgb(44,86,235)' : '#FA4265'
+                            }} className="h-2 ml-2 rounded-l-lg"></div>
 
-                            </div>
-                            <div style={{ width: (upcoming_matches[count]?.prob_draw && Math.round(upcoming_matches[count]?.prob_draw * 100).toString()) + "%" }} className="h-2 bg-gray-200 ml-0.5 mr-0.5 dark:bg-muted"></div>
-                            <div style={{ width: (upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100).toString()) + "%", backgroundColor: '#FA4265' }} className="h-2 mr-2 rounded-r-lg "></div>
+                            <div style={{
+                                width: (upcoming_matches[count]?.prob_draw && Math.round(upcoming_matches[count]?.prob_draw * 100).toString()) + "%"
+                            }} className="h-2 bg-gray-200 ml-0.5 mr-0.5 dark:bg-muted"></div>
+
+                            <div style={{
+                                width: (upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100).toString()) + "%",
+                                backgroundColor: upcoming_matches[count]?.away_team === user_team ? 'rgb(44,86,235)' : '#FA4265'
+                            }} className="h-2 mr-2 rounded-r-lg"></div>
+
                         </div>
                     </div>
                     <div className=" flex justify-between gap-2 ">
