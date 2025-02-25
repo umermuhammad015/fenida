@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { clsx } from 'clsx';
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+// import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -250,7 +250,7 @@ export default function UpcomingMatches() {
                                                     </TableCell>
                                                     <TableCell>
                                                         <div className="flex gap-2 items-center">
-                                                            <Image
+                                                            <img
                                                                 src={"/images/teams/" + row?.home_country + " - " + row?.home_team + ".png"}
                                                                 width={25}
                                                                 height={25}
@@ -274,7 +274,7 @@ export default function UpcomingMatches() {
                                                     <TableCell>
                                                         <div className="flex gap-2 justify-end">
                                                             <div className="">{(row?.away_team)}</div>
-                                                            <Image
+                                                            <img
                                                                 src={"/images/teams/" + row?.away_country + " - " + row?.away_team + ".png"}
                                                                 width={25}
                                                                 height={25}

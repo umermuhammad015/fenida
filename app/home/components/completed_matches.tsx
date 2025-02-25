@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
-import Image from 'next/image'
+// import Image from 'next/image'
 import { clsx } from 'clsx';
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
@@ -135,7 +135,7 @@ export default function CompletedMatches() {
                                         </TooltipTrigger>
                                         <TooltipContent>
                                             {completed_matches[completed_matches_count]?.home_team === user_team ?
-                                                "Probability of Win" : "Probability of Lose"}
+                                                "Probability of Win" : "Probability of Loss"}
                                         </TooltipContent>
                                     </Tooltip>
 
@@ -179,7 +179,7 @@ export default function CompletedMatches() {
                                         </TooltipTrigger>
                                         <TooltipContent>
                                             {completed_matches[completed_matches_count]?.away_team === user_team ?
-                                                "Probability of Win" : "Probability of Lose"}
+                                                "Probability of Win" : "Probability of Loss"}
                                         </TooltipContent>
                                     </Tooltip>
                                 </div>
@@ -301,7 +301,7 @@ export default function CompletedMatches() {
                                                         </TableCell>
                                                         <TableCell>
                                                             <div className="flex gap-2 items-center">
-                                                                <Image
+                                                                <img
                                                                     src={"/images/teams/" + row?.home_country + " - " + row?.home_team + ".png"}
                                                                     width={25}
                                                                     height={25}
@@ -343,7 +343,7 @@ export default function CompletedMatches() {
                                                         <TableCell>
                                                             <div className="flex gap-2 justify-end">
                                                                 <div className="flex justify-center items-center">{(row?.away_team_short)}</div>
-                                                                <Image
+                                                                <img
                                                                     src={"/images/teams/" + row?.away_country + " - " + row?.away_team + ".png"}
                                                                     width={25}
                                                                     height={25}
