@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import Image from 'next/image'
 import { clsx } from 'clsx';
 import { useSearchParams } from 'next/navigation'
+import { motion } from 'framer-motion'
 
 import fetchCompletedMatches from './fetchCompletedMatches';
 
@@ -23,7 +24,6 @@ import {
 import CompletedSkeleton from './completed_skeleton';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { SlidingNumber } from '@/components/ui/sliding-number';
-// import { motion } from 'framer-motion';
 
 interface CompletedMatch {
     away_country: string | null;
@@ -44,25 +44,16 @@ interface CompletedMatch {
     tie_prob: number | null;
 }
 
-
-
 export default function CompletedMatches() {
     const searchParams = useSearchParams()
     const [isLoading, setIsLoading] = useState(true);
     const [completed_matches, setCompletedMatches] = useState<CompletedMatch[] | null>(null);
     const [completed_matches_count, set_completed_matches_count] = useState(0);
 
-    // const [value, setValue] = useState(100);
-    // const [width, setWidth] = useState(0);
-
-    // const [value, setValue] = useState(0);
-
-
     const completed_matches_length = completed_matches ? completed_matches.length : 0
 
     const user_league_code = searchParams.get('league') || "ENG1"
     const user_team = searchParams.get('team') || "Nottingham Forest"
-
 
     function show_previous() {
         if (completed_matches_count < completed_matches_length - 1) {
@@ -89,6 +80,7 @@ export default function CompletedMatches() {
         }
         return [day, month, year].join(' ');
     }
+    
     useEffect(() => {
         setIsLoading(true)
         const fetchData = async () => {
@@ -122,13 +114,10 @@ export default function CompletedMatches() {
                                 </div>
                             </div>
 
-
-
                             <TooltipProvider>
                                 <div className="flex">
                                     <Tooltip>
                                         <TooltipTrigger asChild>
-
                                             <div className={clsx(
                                                 `w-14 text-center p-2 border bg-gray-100 rounded-l dark:bg-muted`,
                                                 {
@@ -138,9 +127,6 @@ export default function CompletedMatches() {
                                                         completed_matches[completed_matches_count]?.home_team === user_team,
                                                 }
                                             )}>
-
-                                                {/* {completed_matches[completed_matches_count]?.home_win_prob &&
-                                                    Math.round(completed_matches[completed_matches_count]?.home_win_prob * 100).toString() + "%"} */}
                                                 <div className="inline-flex items-center justify-center">
                                                     <SlidingNumber value={Number(completed_matches[completed_matches_count]?.home_win_prob &&
                                                         Math.round(completed_matches[completed_matches_count]?.home_win_prob * 100))} />%
@@ -163,15 +149,11 @@ export default function CompletedMatches() {
                                                         completed_matches[completed_matches_count]?.away_goals,
                                                 }
                                             )}>
-
-
                                                 <div className="inline-flex items-center justify-center">
                                                     <SlidingNumber value={Number(completed_matches[completed_matches_count]?.tie_prob &&
                                                         Math.round(completed_matches[completed_matches_count]?.tie_prob * 100))} />%
-
                                                 </div>
                                             </div>
-
                                         </TooltipTrigger>
                                         <TooltipContent>
                                             <div>Probability of Draw</div>
@@ -192,7 +174,6 @@ export default function CompletedMatches() {
                                                 <div className="inline-flex items-center justify-center">
                                                     <SlidingNumber value={Number(completed_matches[completed_matches_count]?.away_win_prob &&
                                                         Math.round(completed_matches[completed_matches_count]?.away_win_prob * 100))} />%
-
                                                 </div>
                                             </div>
                                         </TooltipTrigger>
@@ -205,43 +186,54 @@ export default function CompletedMatches() {
                             </TooltipProvider>
                         </div>
 
-                        {/* Rest of your component JSX remains the same */}
-                        {/* Teams, scores, xG stats sections */}
-
                         <div className="flex justify-around font-semibold mb-4">
                             <div className="flex flex-col justify-center items-center w-1/2">
-                                <Image
-                                    src={"/images/teams/" + completed_matches[completed_matches_count]?.home_country + " - " +
-                                        completed_matches[completed_matches_count]?.home_team + ".png"}
-                                    width={50}
-                                    height={50}
-                                    className="object-contain"
-                                    alt="Picture of the author"
-                                />
+                                <motion.div
+                                    key={`home-img-${completed_matches_count}`}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.5 }}
+                                >
+                                    <Image
+                                        src={"/images/teams/" + completed_matches[completed_matches_count]?.home_country + " - " +
+                                            completed_matches[completed_matches_count]?.home_team + ".png"}
+                                        width={50}
+                                        height={50}
+                                        className="object-contain"
+                                        alt="Picture of the author"
+                                    />
+                                </motion.div>
                                 <div className="text-center">{completed_matches[completed_matches_count]?.home_team_short}</div>
                             </div>
 
                             <div className="flex justify-center items-center">
                                 <div className="text-xl bg-gray-100 p-2 rounded font-bold dark:bg-muted">
-                                    {/* {completed_matches[completed_matches_count]?.home_goals} */}
                                     <SlidingNumber value={completed_matches[completed_matches_count]?.home_goals as number} />
                                 </div>
                                 <div className="text-2xl mx-3 text-gray-400">:</div>
                                 <div className="text-xl bg-gray-100 p-2 rounded font-bold dark:bg-muted">
-
                                     <SlidingNumber value={completed_matches[completed_matches_count]?.away_goals as number} />
                                 </div>
                             </div>
 
                             <div className="flex flex-col justify-center items-center w-1/2">
-                                <Image
-                                    src={"/images/teams/" + completed_matches[completed_matches_count]?.away_country + " - " +
-                                        completed_matches[completed_matches_count]?.away_team + ".png"}
-                                    width={50}
-                                    height={50}
-                                    className="object-contain"
-                                    alt="Picture of the author"
-                                />
+                                <motion.div
+                                    key={`away-img-${completed_matches_count}`}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.5 }}
+                                >
+                                    <Image
+                                        src={"/images/teams/" + completed_matches[completed_matches_count]?.away_country + " - " +
+                                            completed_matches[completed_matches_count]?.away_team + ".png"}
+                                        width={50}
+                                        height={50}
+                                        className="object-contain"
+                                        alt="Picture of the author"
+                                    />
+                                </motion.div>
                                 <div className="text-center">{completed_matches[completed_matches_count]?.away_team_short}</div>
                             </div>
                         </div>
@@ -250,20 +242,16 @@ export default function CompletedMatches() {
                             <div className="flex justify-between bg-gray-100 w-1/2 rounded p-2 dark:bg-muted">
                                 <div className="ml-1 text-gray-400">Shot-Based xG</div>
                                 <div className="mr-1">
-
                                     <div className="inline-flex items-center justify-center">
                                         <SlidingNumber value={Number(completed_matches[completed_matches_count]?.home_xg)} />
-
                                     </div>
                                 </div>
                             </div>
                             <div className="flex justify-between bg-gray-100 w-1/2 rounded p-2 dark:bg-muted">
                                 <div className="ml-1 text-gray-400">Shot-Based xG</div>
                                 <div className="mr-1">
-
                                     <div className="inline-flex items-center justify-center">
                                         <SlidingNumber value={Number(completed_matches[completed_matches_count]?.away_xg)} />
-
                                     </div>
                                 </div>
                             </div>
@@ -298,9 +286,8 @@ export default function CompletedMatches() {
                                 <Button className="border w-16 bg-blue-700 text-white p-2 rounded-lg">Details</Button>
                             </DialogTrigger>
                             <DialogContent className="overflow-y-scroll max-h-screen lg:max-w-[50%] md:max-w-[60%] sm:max-w-[80%] xs:max-w-[90%]">
-
                                 <div className="bg-background rounded-lg">
-                                    <div className=" p-1 text-sm font-semibold border-b-2 flex justify-between ">
+                                    <div className="p-1 text-sm font-semibold border-b-2 flex justify-between">
                                         <h2>Completed Matches</h2>
                                     </div>
 
@@ -308,19 +295,13 @@ export default function CompletedMatches() {
                                         <Table className="">
                                             <TableBody>
                                                 {completed_matches.length > 0 && completed_matches.map((row: CompletedMatch, i: number) => (
-                                                    <TableRow key={i} className="h-16 w-[70%] cursor-pointer" >
-                                                        {/* <TableCell>
-                                        <div>{(row.date)}</div>
-                                        <div className="text-center">{(row.home_goals)}</div>
-                                    </TableCell> */}
+                                                    <TableRow key={i} className="h-16 w-[70%] cursor-pointer">
                                                         <TableCell>
                                                             <div>{row.date && formatDate(row.date)}</div>
-
                                                         </TableCell>
                                                         <TableCell>
                                                             <div className="flex gap-2 items-center">
                                                                 <Image
-                                                                    // src="/images/teams/{(row?.country)}.concat{(row?.team)}.png"
                                                                     src={"/images/teams/" + row?.home_country + " - " + row?.home_team + ".png"}
                                                                     width={25}
                                                                     height={25}
@@ -359,26 +340,20 @@ export default function CompletedMatches() {
                                                             </div>
                                                         </TableCell>
 
-
                                                         <TableCell>
                                                             <div className="flex gap-2 justify-end">
                                                                 <div className="flex justify-center items-center">{(row?.away_team_short)}</div>
-
                                                                 <Image
-                                                                    // src="/images/teams/{(row?.country)}.concat{(row?.team)}.png"
                                                                     src={"/images/teams/" + row?.away_country + " - " + row?.away_team + ".png"}
                                                                     width={25}
                                                                     height={25}
                                                                     className="object-contain"
                                                                     alt="Picture of the author"
                                                                 />
-
                                                             </div>
-
                                                         </TableCell>
 
                                                         <TableCell className="flex justify-center items-center mt-3 gap-2">
-
                                                             <div className={clsx(
                                                                 `w-14 text-center p-2 border-2 bg-gray-100 rounded-l dark:bg-muted`,
                                                                 {
@@ -390,49 +365,22 @@ export default function CompletedMatches() {
                                                             </div>
                                                             <div className={clsx(`w-14 text-center p-2 border-2 bg-gray-100  dark:bg-muted`, {
                                                                 'border-orange-600': row?.home_goals === row?.away_goals
-
-                                                            }
-                                                            )}>
+                                                            })}>
                                                                 {row?.tie_prob && Math.round(row?.tie_prob * 100).toString() + "%"}
                                                             </div>
                                                             <div className={clsx(`w-14 text-center p-2 border-2 bg-gray-100 rounded-r dark:bg-muted`, {
                                                                 'border-green-600': (row?.home_goals !== null && row?.away_goals !== null) && ((row?.home_goals < row?.away_goals) && (row?.away_team === user_team)),
                                                                 'border-red-600': (row?.home_goals !== null && row?.away_goals !== null) && ((row?.home_goals > (row?.away_goals) && row?.away_team === user_team))
-
-
-                                                            }
-                                                            )}>
+                                                            })}>
                                                                 {row?.away_win_prob && Math.round(row?.away_win_prob * 100).toString() + "%"}
                                                             </div>
-
-                                                            {/* <div className="w-12 h-9 bg-gray-100 dark:bg-muted rounded flex justify-center items-center">{Math.round(parseFloat(row.home_win_prob) * 100).toString() + "%"}</div>
-                                                                <div className="w-12 h-9 bg-gray-100 dark:bg-muted rounded flex justify-center items-center">{Math.round(parseFloat(row.tie_prob) * 100).toString() + "%"}</div>
-                                                                <div className="w-12 h-9 bg-gray-100 dark:bg-muted rounded flex justify-center items-center">{Math.round(parseFloat(row.away_win_prob) * 100).toString() + "%"}</div> */}
                                                         </TableCell>
-
-
                                                     </TableRow>
-
-
                                                 ))}
                                             </TableBody>
                                         </Table>
                                     </div>
                                 </div>
-                                {/* <section className="">
-                                        <div ref={ref}>
-                                            <Image
-                                                // src="/images/teams/{(row?.country)}.concat{(row?.team)}.png"
-                                                src={"/images/spinner/spinner2.gif"}
-                                                alt="spinner"
-                                                width={56}
-                                                height={56}
-                                                className="bg-none"
-
-                                            />
-                                        </div>
-
-                                    </section> */}
                             </DialogContent>
                         </Dialog>
 
