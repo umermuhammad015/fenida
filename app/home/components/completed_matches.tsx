@@ -193,9 +193,9 @@ export default function CompletedMatches() {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    transition={{ duration: 0.5 }}
+                                    transition={{ duration: 0.7 }}
                                 >
-                                    <Image
+                                    <img
                                         src={"/images/teams/" + completed_matches[completed_matches_count]?.home_country + " - " +
                                             completed_matches[completed_matches_count]?.home_team + ".png"}
                                         width={50}
@@ -223,9 +223,9 @@ export default function CompletedMatches() {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    transition={{ duration: 0.5 }}
+                                    transition={{ duration: 0.7 }}
                                 >
-                                    <Image
+                                    <img
                                         src={"/images/teams/" + completed_matches[completed_matches_count]?.away_country + " - " +
                                             completed_matches[completed_matches_count]?.away_team + ".png"}
                                         width={50}
