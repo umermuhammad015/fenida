@@ -20,6 +20,7 @@ import {
 import fetchUpcomingMatches from './fetchUpcomingMatches'
 import UpcomingSkeleton from './upcomingSkeleton'
 import fetchUpcomingMatchesAll from './FetchupcomingMatchesAll';
+import { SlidingNumber } from '@/components/ui/sliding-number';
 
 // type UpcomingMatchesType = {
 //     time: string;
@@ -235,7 +236,18 @@ export default function UpcomingMatches() {
                                     />
                                 </div>
                                 <div className="transition  ease-in-out delay-150 font-semibold">{upcoming_matches[count]?.home_team_short}</div>
-                                <div className="text-gray-400">{Number(upcoming_matches[count]?.home_cumulative_points) + " Point"}</div>
+
+                                <div className="text-gray-400">
+                                    {/* {Number(upcoming_matches[count]?.home_cumulative_points) + " Point"} */}
+                                    {/* <div className="inline-flex items-center justify-center">
+                                        <SlidingNumber value={Number(upcoming_matches[count]?.home_cumulative_points)} />Point
+
+                                    </div> */}
+                                    <div className="inline-flex items-center gap-1 justify-center">
+                                        <SlidingNumber value={Number(upcoming_matches[count]?.home_cumulative_points)} />
+                                        <span>Point</span>
+                                    </div>
+                                </div>
                             </div>
                             <div style={{ height: '50px', width: '2px' }} className=" bg-gray-100 mt-4 dark:bg-muted"></div>
                             <div className="flex flex-col justify-center text-center w-1/2">
@@ -252,14 +264,27 @@ export default function UpcomingMatches() {
                                     />
                                 </div>
                                 <div className="font-semibold">{upcoming_matches[count]?.away_team_short}</div>
-                                <div className="text-gray-400">{Number(upcoming_matches[count]?.away_cumulative_points) + " Point"} </div>
+                                <div className="text-gray-400">
+                                    {/* {Number(upcoming_matches[count]?.away_cumulative_points) + " Point"} */}
+                                    <div className="inline-flex items-center gap-1 justify-center">
+                                        <SlidingNumber value={Number(upcoming_matches[count]?.away_cumulative_points)} />
+                                        <span>Point</span>
+                                    </div>
+                                </div>
+
                             </div>
 
                         </div>
 
                         <div className="flex justify-between text-gray-400 m-2 pt-3">
-                            <div>{upcoming_matches[count]?.prob1 && Math.round(upcoming_matches[count]?.prob1 * 100).toString() + "%"}</div>
-                            <div>{upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100).toString() + "%"}</div>
+                            <div className="inline-flex items-center justify-center">
+                                <SlidingNumber value={Number(upcoming_matches[count]?.prob1 && Math.round(upcoming_matches[count]?.prob1 * 100))} />%
+                            </div>
+                            {/* <div>{upcoming_matches[count]?.prob1 && Math.round(upcoming_matches[count]?.prob1 * 100).toString() + "%"}</div> */}
+                            <div className="inline-flex items-center justify-center">
+                                <SlidingNumber value={Number(upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100))} />%
+                            </div>
+                            {/* <div>{upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100).toString() + "%"}</div> */}
                         </div>
 
                         <div className="flex justify-between pb-10">
@@ -272,23 +297,15 @@ export default function UpcomingMatches() {
                                             completed_matches[completed_matches_count]?.home_team === user_team,
                                     }
                                 )} */}
-                            {/* <div style={{ width: (upcoming_matches[count]?.prob1 && Math.round(upcoming_matches[count]?.prob1 * 100).toString()) + "%", backgroundColor: 'rgb(44,86,235)' }} className="h-2 ml-2 rounded-l-lg"></div>
-                            <div style={{ width: (upcoming_matches[count]?.prob_draw && Math.round(upcoming_matches[count]?.prob_draw * 100).toString()) + "%" }} className="h-2 bg-gray-200 ml-0.5 mr-0.5 dark:bg-muted"></div>
-                            <div style={{ width: (upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100).toString()) + "%", backgroundColor: '#FA4265' }} className="h-2 mr-2 rounded-r-lg "></div> */}
                             <div style={{
                                 width: (upcoming_matches[count]?.prob1 && Math.round(upcoming_matches[count]?.prob1 * 100).toString()) + "%",
-                                backgroundColor: upcoming_matches[count]?.home_team === user_team ? 'rgb(44,86,235)' : '#FA4265'
-                            }} className="h-2 ml-2 rounded-l-lg"></div>
+                                backgroundColor: 'rgb(44,86,235)'
+                            }}
+                                className="h-2 ml-2 rounded-l-lg">
 
-                            <div style={{
-                                width: (upcoming_matches[count]?.prob_draw && Math.round(upcoming_matches[count]?.prob_draw * 100).toString()) + "%"
-                            }} className="h-2 bg-gray-200 ml-0.5 mr-0.5 dark:bg-muted"></div>
-
-                            <div style={{
-                                width: (upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100).toString()) + "%",
-                                backgroundColor: upcoming_matches[count]?.away_team === user_team ? 'rgb(44,86,235)' : '#FA4265'
-                            }} className="h-2 mr-2 rounded-r-lg"></div>
-
+                            </div>
+                            <div style={{ width: (upcoming_matches[count]?.prob_draw && Math.round(upcoming_matches[count]?.prob_draw * 100).toString()) + "%" }} className="h-2 bg-gray-200 ml-0.5 mr-0.5 dark:bg-muted"></div>
+                            <div style={{ width: (upcoming_matches[count]?.prob2 && Math.round(upcoming_matches[count]?.prob2 * 100).toString()) + "%", backgroundColor: '#FA4265' }} className="h-2 mr-2 rounded-r-lg "></div>
                         </div>
                     </div>
                     <div className=" flex justify-between gap-2 ">
@@ -419,8 +436,8 @@ export default function UpcomingMatches() {
                             Next
                         </button>
                     </div>
-                    {/* </div> */}
                 </div>
+                {/* </div> */}
             </>
 
         )
