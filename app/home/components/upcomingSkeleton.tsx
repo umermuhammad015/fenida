@@ -7,8 +7,8 @@ export default function UpcomingSkeleton() {
         <>
             <div className="flex flex-col space-y-2 bg-gray-50 rounded-xl p-4 shadow-sm">
                 {/* Header */}
-                <div className="pb-2">
-                    <Skeleton className="h-5 w-[140px] bg-gray-300 animate-pulse rounded" />
+                <div className="p-1 text-sm font-semibold border-b-2">
+                    <h2>Upcoming Matches</h2>
                 </div>
 
                 {/* League Name */}

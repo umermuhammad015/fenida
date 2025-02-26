@@ -266,6 +266,8 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                         setTeam("Rio Ave")
                     } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
                         setTeam("Olympiakos Piraeus")
+                    } else {
+                        setTeam(teams[0].team)
                     }
                     setTeamsList(uniqueTeams);
 
@@ -407,6 +409,20 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                                 >
                                     POR1
                                 </SelectItem>
+                                {/* <SelectItem
+                                    key={4}
+                                    value={"FRA1"}
+                                // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
+                                >
+                                    FRA1
+                                </SelectItem>
+                                <SelectItem
+                                    key={5}
+                                    value={"GER1"}
+                                // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
+                                >
+                                    GER1
+                                </SelectItem> */}
                             </SelectContent>
                         </Select>
                     </div>

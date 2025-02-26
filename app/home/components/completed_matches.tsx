@@ -19,6 +19,7 @@ import {
 import {
     Dialog,
     DialogContent,
+    DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
 import CompletedSkeleton from './completed_skeleton';
@@ -86,6 +87,7 @@ export default function CompletedMatches() {
         const fetchData = async () => {
             try {
                 const cm = await fetchCompletedMatches(user_league_code, user_team);
+                console.log(cm)
                 setCompletedMatches(cm);
                 setIsLoading(false)
             } catch (error) {
@@ -286,6 +288,7 @@ export default function CompletedMatches() {
                                 <Button className="border w-16 bg-blue-700 text-white p-2 rounded-lg">Details</Button>
                             </DialogTrigger>
                             <DialogContent className="overflow-y-scroll max-h-screen lg:max-w-[50%] md:max-w-[60%] sm:max-w-[80%] xs:max-w-[90%]">
+                                <DialogTitle className="sr-only">Completed Matches Details</DialogTitle>
                                 <div className="bg-background rounded-lg">
                                     <div className="p-1 text-sm font-semibold border-b-2 flex justify-between">
                                         <h2>Completed Matches</h2>

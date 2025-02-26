@@ -7,8 +7,11 @@ export default function CompletedSkeleton() {
         <>
             <div className="flex flex-col space-y-3 bg-gray-50 rounded-xl p-5 shadow-md">
                 {/* Header */}
-                <div className="pb-2 border-b border-gray-100">
+                {/* <div className="pb-2 border-b border-gray-100">
                     <Skeleton className="h-5 w-[160px] bg-gray-300 animate-pulse rounded" />
+                </div> */}
+                <div className="p-1 text-sm font-semibold border-b-2">
+                    <h2>Completed Matches</h2>
                 </div>
 
                 {/* League and Probabilities */}

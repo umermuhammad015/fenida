@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
+    DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
 import {
@@ -17,7 +18,7 @@ import {
     TableCell,
     TableRow,
 } from "@/components/ui/table"
-import fetchUpcomingMatches from './fetchUpcomingMatches'
+// import fetchUpcomingMatches from './fetchUpcomingMatches'
 import UpcomingSkeleton from './upcomingSkeleton'
 import fetchUpcomingMatchesAll from './FetchupcomingMatchesAll';
 import { SlidingNumber } from '@/components/ui/sliding-number';
@@ -83,12 +84,37 @@ export default function UpcomingMatches() {
         return [day, month, year].join(' ');
     }
 
+    // useEffect(() => {
+    //     setIsLoading(true)
+    //     const fetchData = async () => {
+    //         try {
+    //             const um = await fetchUpcomingMatches(user_league_code, user_team);
+    //             setUpcomingMatches(um);
+    //             setIsLoading(false)
+    //         } catch (error) {
+    //             console.error('Error fetching completed matches data:', error);
+    //         }
+    //     };
+    //     fetchData();
+    // }, [user_league_code, user_team]);
+
     useEffect(() => {
         setIsLoading(true)
         const fetchData = async () => {
             try {
-                const um = await fetchUpcomingMatches(user_league_code, user_team);
+                const uma = await fetchUpcomingMatchesAll(user_league_code);
+
+                const um = uma.filter(games => ((games.home_team == user_team) || (games.away_team == user_team)));
+
                 setUpcomingMatches(um);
+                setUpcomingMatchesAll(uma);
+
+                // console.log("um and uma")
+                // console.log(um)
+                // console.log(uma)
+                // console.log(user_league_code)
+                // console.log(user_team)
+
                 setIsLoading(false)
             } catch (error) {
                 console.error('Error fetching completed matches data:', error);
@@ -96,20 +122,6 @@ export default function UpcomingMatches() {
         };
         fetchData();
     }, [user_league_code, user_team]);
-
-    useEffect(() => {
-        setIsLoading(true)
-        const fetchData = async () => {
-            try {
-                const uma = await fetchUpcomingMatchesAll(user_league_code);
-                setUpcomingMatchesAll(uma);
-                setIsLoading(false)
-            } catch (error) {
-                console.error('Error fetching completed matches data:', error);
-            }
-        };
-        fetchData();
-    }, [user_league_code]);
 
     if (isLoading) {
         return (
@@ -121,10 +133,16 @@ export default function UpcomingMatches() {
     if (upcoming_matches.length > 0) {
         return (
             <>
+                {/* <Button onClick={() => {
+                    console.log("user_league_code on click")
+                    console.log(user_league_code)
+                    console.log(upcoming_matches_all)
+                }}>League code</Button> */}
                 <div className="bg-background rounded-lg p-4">
                     <div className="text-xs">
                         <div className="p-1 text-sm font-semibold border-b-2">
                             <h2>Upcoming Matches</h2>
+
                         </div>
 
                         <div className="flex justify-center font-semibold pt-5">
@@ -231,6 +249,7 @@ export default function UpcomingMatches() {
                                 <Button className="border w-16 bg-blue-700 text-white p-2 rounded-lg">Details</Button>
                             </DialogTrigger>
                             <DialogContent className="overflow-y-scroll max-h-screen lg:max-w-[50%] md:max-w-[60%] sm:max-w-[80%] xs:max-w-[90%]">
+                                <DialogTitle className="sr-only">Upcoming Matches Details</DialogTitle>
                                 <div className="bg-background rounded-xl">
                                     <div className="p-1 text-sm font-semibold border-b-2 flex justify-between">
                                         <h2>Upcoming Matches</h2>

@@ -12,7 +12,7 @@ export default async function FetchTeams(league_code: string) {
         },
         where: {
             // position: { in: ['GK', 'LB'] },
-            // league_start_year: season,
+            league_start_year: 2024,
             league_code: league_code,
         },
         orderBy: [

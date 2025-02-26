@@ -24,7 +24,7 @@ export default async function fetchUpcomingMatchesAll(user_league_code: string) 
             away_cumulative_points: true
         },
         where: {
-
+            // OR: [{ home_team: user_team }, { away_team: user_team }],
             league_code: user_league_code,
 
         },
