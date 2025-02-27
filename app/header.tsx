@@ -39,7 +39,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
 // import FetchPlayer from './FetchPlayer';
 import { usePathname } from 'next/navigation';
 
@@ -313,6 +313,7 @@ function Header() {
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-[80%] sm:w-[350px]">
+                  <SheetTitle></SheetTitle>
                   <div className="py-4">
                     <Link href="/home" className="flex items-center mb-6">
                       <Image
