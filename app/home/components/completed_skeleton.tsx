@@ -10,7 +10,7 @@ export default function CompletedSkeleton() {
                 {/* <div className="pb-2 border-b border-gray-100">
                     <Skeleton className="h-5 w-[160px] bg-gray-300 animate-pulse rounded" />
                 </div> */}
-                <div className="p-1 text-sm font-semibold border-b-2">
+                <div className="p-1 text-sm font-semibold border-b-2 dark:text-background">
                     <h2>Completed Matches</h2>
                 </div>
 

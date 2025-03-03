@@ -7,7 +7,7 @@ export default function UpcomingSkeleton() {
         <>
             <div className="flex flex-col space-y-2 bg-gray-50 rounded-xl p-4 shadow-sm">
                 {/* Header */}
-                <div className="p-1 text-sm font-semibold border-b-2">
+                <div className="p-1 text-sm font-semibold border-b-2 dark:text-background">
                     <h2>Upcoming Matches</h2>
                 </div>
 
