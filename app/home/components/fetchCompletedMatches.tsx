@@ -35,10 +35,10 @@ export default async function fetchCompletedMatches(user_league_code: string, us
             OR: [{ home_team: user_team }, { away_team: user_team }],
 
             status: 'completed',
-            // date: {
-            //     lte: new Date("2022-01-30"),
-            //     get: new Date("2022-01-15"),
-            //   },
+            date: {
+                // lte: new Date("2024-08-22"),
+                gte: new Date("2024-08-01"),
+              },
 
         },
 
