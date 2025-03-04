@@ -364,18 +364,18 @@ export default function CompletedMatches() {
                                                                     'border-red-600': (row?.home_goals !== null && row?.away_goals !== null) && ((row?.home_goals < row?.away_goals) && (row?.home_team === user_team))
                                                                 }
                                                             )}>
-                                                                {row?.home_win_prob && Math.round(row?.home_win_prob * 100).toString() + "%"}
+                                                                {(row?.home_win_prob) === null ? "0%" : row?.home_win_prob && Math.round(row?.home_win_prob * 100).toString() + "%"}
                                                             </div>
                                                             <div className={clsx(`w-14 text-center p-2 border-2 bg-gray-100  dark:bg-muted`, {
                                                                 'border-orange-600': row?.home_goals === row?.away_goals
                                                             })}>
-                                                                {row?.tie_prob && Math.round(row?.tie_prob * 100).toString() + "%"}
+                                                                {(row?.tie_prob) === null ? "0%" : (row?.tie_prob) && Math.round(row?.tie_prob * 100).toString() + "%"}
                                                             </div>
                                                             <div className={clsx(`w-14 text-center p-2 border-2 bg-gray-100 rounded-r dark:bg-muted`, {
                                                                 'border-green-600': (row?.home_goals !== null && row?.away_goals !== null) && ((row?.home_goals < row?.away_goals) && (row?.away_team === user_team)),
                                                                 'border-red-600': (row?.home_goals !== null && row?.away_goals !== null) && ((row?.home_goals > (row?.away_goals) && row?.away_team === user_team))
                                                             })}>
-                                                                {row?.away_win_prob && Math.round(row?.away_win_prob * 100).toString() + "%"}
+                                                                {(row?.away_win_prob) === null ? "0%" : (row?.away_win_prob) && Math.round(row?.away_win_prob * 100).toString() + "%"}
                                                             </div>
                                                         </TableCell>
                                                     </TableRow>
