@@ -388,7 +388,7 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                             League
                         </label>
                         <Select value={league} onValueChange={onLeagueChange}>
-                            <SelectTrigger className="py-2 font-medium bg-background rounded-lg xs:w-24 md:w-24 lg:w-24 xl:w-40">
+                            <SelectTrigger className="py-2 font-medium bg-background rounded-lg xs:w-24 md:w-24 lg:w-40 xl:w-56">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent className='rounded-lg'>
@@ -398,28 +398,28 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                                     value={"ENG1"}
                                 // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
                                 >
-                                    ENG1
+                                    Premier League (England)
                                 </SelectItem>
                                 <SelectItem
                                     key={2}
                                     value={"GRE1"}
                                 // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
                                 >
-                                    GRE1
+                                    Super League (Greece)
                                 </SelectItem>
                                 <SelectItem
                                     key={3}
                                     value={"POR1"}
                                 // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
                                 >
-                                    POR1
+                                    Primeira Liga (Portugal)
                                 </SelectItem>
                                 <SelectItem
                                     key={4}
                                     value={"SAU1"}
                                 // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
                                 >
-                                    SAU1
+                                    Pro League (Saudi Arabia)
                                 </SelectItem>
                                 {/* <SelectItem
                                     key={4}
