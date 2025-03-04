@@ -812,7 +812,7 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
                     ORDER BY date DESC
                     ) as row_num
                 FROM fenida_fenida.points_long 
-                WHERE league_start_year = 2024 AND status = 'completed' AND league_code IN ('ENG1','GRE1','POR1')
+                WHERE league_start_year = 2024 AND status = 'completed' AND league_code IN ('ENG1','GRE1','POR1','SAU1')
                 ) ranked_teams
                 WHERE row_num <= 5
                 ORDER BY team, date ASC;
