@@ -2044,7 +2044,7 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
                                                     className="object-contain"
                                                     alt="Picture of the author"
                                                 />
-                                                <div className='text-sm cursor-pointer'>{(row?.team)}</div>
+                                                <div className='text-sm'>{(row?.team)}</div>
                                             </div>
                                         </TableCell >
                                         <TableCell >

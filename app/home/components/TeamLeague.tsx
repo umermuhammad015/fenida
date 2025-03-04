@@ -21,7 +21,7 @@ type Teamleague = {
 }
 
 export default function FetchTeamLeague({ user_league_code, user_team }: Teamleague) {
-// export default function FetchTeamLeague({ league_start_year, user_league_code, user_team }: Teamleague) {
+    // export default function FetchTeamLeague({ league_start_year, user_league_code, user_team }: Teamleague) {
 
     // console.log("component renderd")
     const router = useRouter();
@@ -130,6 +130,9 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                     setTeam("Rio Ave")
                 } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
                     setTeam("Olympiakos Piraeus")
+                }
+                else if (uniqueTeams.includes("Damac")) {
+                    setTeam("Damac")
                 }
                 setTeamsList(uniqueTeams);
 
@@ -266,6 +269,8 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                         setTeam("Rio Ave")
                     } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
                         setTeam("Olympiakos Piraeus")
+                    } else if (uniqueTeams.includes("Damac")) {
+                        setTeam("Damac")
                     } else {
                         setTeam(teams[0].team)
                     }
@@ -408,6 +413,13 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                                 // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
                                 >
                                     POR1
+                                </SelectItem>
+                                <SelectItem
+                                    key={3}
+                                    value={"SAU1"}
+                                // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
+                                >
+                                    SAU1
                                 </SelectItem>
                                 {/* <SelectItem
                                     key={4}
