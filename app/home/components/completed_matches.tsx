@@ -56,17 +56,23 @@ export default function CompletedMatches() {
     const user_league_code = searchParams.get('league') || "ENG1"
     const user_team = searchParams.get('team') || "Nottingham Forest"
 
+
+    console.log("completed_matches_count")
+    console.log(completed_matches_count)
+
     function show_previous() {
         if (completed_matches_count < completed_matches_length - 1) {
             set_completed_matches_count(completed_matches_count + 1);
         }
     }
 
+
     function show_next() {
         if (completed_matches_count > 0) {
             set_completed_matches_count(completed_matches_count - 1);
         }
     }
+    // console.log(show_next)
 
     function formatDate(date: string | Date): string {
         const d = new Date(date);
@@ -81,13 +87,18 @@ export default function CompletedMatches() {
         }
         return [day, month, year].join(' ');
     }
-    
+
+    useEffect(() => {
+        set_completed_matches_count(0)
+    }, [user_league_code, user_team])
+
+
     useEffect(() => {
         setIsLoading(true)
         const fetchData = async () => {
             try {
                 const cm = await fetchCompletedMatches(user_league_code, user_team);
-                console.log(cm)
+                // console.log(cm)
                 setCompletedMatches(cm);
                 setIsLoading(false)
             } catch (error) {

@@ -1,123 +1,52 @@
 "use client";
-// import clsx from 'clsx';
+
 import Image from 'next/image'
-// import React, { useEffect, useState } from 'react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ThemeToggleButton from './ThemeToggleButton';
 import Link from "next/link"
 import {
-  // Activity,
-  // ArrowUpRight,
-  // CircleUser,
-  // CreditCard,
-  // DollarSign,
   Menu,
-  // Package2,
-  // Search,
-  // Users,
 } from "lucide-react"
-// import {
-//   Avatar,
-//   AvatarFallback,
-//   AvatarImage,
-// } from "@/components/ui/avatar"
-// import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  // DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
-// import FetchPlayer from './FetchPlayer';
 import { usePathname } from 'next/navigation';
 
-
 function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
-  // const [positions, setPositions] = useState<any>([]);
-  const pathname = usePathname()
+  // Add scroll event listener to detect scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
 
-  // 
-
-  // function handlePositions(p) {
-  //   console.log(p);
-
-  //   console.log(positions.includes(p));
-
-  //   if (positions.includes(p)) {
-
-  //     setPositions((current_p) => {
-  //       return current_p.filter(item => item !== p)
-  //     })
-
-  //     //setPositions(positions.filter(item => item !== p));
-
-  //   } else {
-  //     setPositions((current_p) => {
-  //       return [...current_p, p]
-  //     })
-
-  //     // setPositions([...positions, p]);
-
-  //   }
-
-
-
-  // }
-  // function BoldedText(text: string, shouldBeBold: string) {
-
-  //   const textArray = text.split(shouldBeBold);
-
-  //   return (
-  //     <span>
-  //       {textArray.map((item, index) => (
-  //         <>
-  //           {item}
-  //           {index !== textArray.length - 1 && <b>{shouldBeBold}</b>}
-  //         </>
-  //       ))}
-  //     </span>
-  //   );
-  // }
-
-  // useEffect(() => {
-
-  //   if (name !== "") {
-  //     const fetchData = async () => {
-  //       try {
-  //         const Players_names = await FetchPlayer(name)
-  //         console.log(Players_names);
-
-  //         setPlayerNames(Players_names);
-  //       } catch (error) {
-
-  //         console.error('Error fetching data:', error);
-  //       }
-  //     };
-
-  //     fetchData();
-  //   }
-
-
-  // }, [name]);
-
-
+    // Add event listener
+    window.addEventListener('scroll', handleScroll);
+    
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full h-auto border-b bg-background">
+      <header className={`sticky top-0 z-50 w-full h-auto border-b transition-all duration-300 ${
+        isScrolled ? "bg-glassmorf backdrop-blur-md shadow-lg" : "bg-background"
+      }`}>
         <div className="container px-4 mx-auto relative">
           <div className="flex items-center justify-between py-4">
             {/* Logo - Left Section */}
@@ -222,56 +151,6 @@ function Header() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-
-              {/* <DropdownMenu>
-                <DropdownMenuTrigger className="font-semibold text-sm lg:text-base text-gray-500 hover:text-foreground">
-                  Coaches
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-64">
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <Link href="#" className="w-full">
-                      <div className="flex items-start gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="shrink-0 w-8 h-8 p-1 mt-1 border rounded-lg">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                        </svg>
-                        <div>
-                          <div className="font-semibold">Coach search</div>
-                          <div className="text-xs text-muted-foreground">Search for any coach by name and analyse their data</div>
-                        </div>
-                      </div>
-                    </Link>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem>
-                    <Link href="#" className="w-full">
-                      <div className="flex items-start gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 w-8 h-8 p-1 mt-1 border rounded-lg">
-                          <path d="M4 4v16" /><path d="M9 4v16" /><path d="M14 4v16" /><path d="M19 4v16" /><path d="M22 6 2 18" />
-                        </svg>
-                        <div>
-                          <div className="font-semibold">Market Search</div>
-                          <div className="text-xs text-muted-foreground">Filter worldwide, and shortlist coaches directly from our database</div>
-                        </div>
-                      </div>
-                    </Link>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem>
-                    <Link href="#" className="w-full">
-                      <div className="flex items-start gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="shrink-0 w-8 h-8 p-1 mt-1 border rounded-lg">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                        </svg>
-                        <div>
-                          <div className="font-semibold">ShortList</div>
-                          <div className="text-xs text-muted-foreground">Manage, rank and follow your shortlisted coaches throughout their careers</div>
-                        </div>
-                      </div>
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu> */}
             </nav>
 
             {/* Right Section - Search, Stats Icon, Theme Toggle */}
@@ -312,7 +191,7 @@ function Header() {
                     <span className="sr-only">Toggle menu</span>
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-[80%] sm:w-[350px]">
+                <SheetContent side="left" className="w-[80%] sm:w-[350px] ">
                   <SheetTitle></SheetTitle>
                   <div className="py-4">
                     <Link href="/home" className="flex items-center mb-6">
