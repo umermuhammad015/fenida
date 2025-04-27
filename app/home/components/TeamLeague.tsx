@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useQueryState, } from 'nuqs'
 import FetchTeams from './Fetchteams';
 // import FetchSeason from './fetchSeason';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 // type SeasonType = {
 //     league_start_year: bigint | null;
