@@ -24,10 +24,10 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
     // export default function FetchTeamLeague({ league_start_year, user_league_code, user_team }: Teamleague) {
 
     // console.log("component renderd")
-    const router = useRouter();
+    // const router = useRouter();
     const searchParams = useSearchParams();
 
-    const params = new URLSearchParams(searchParams);
+    // const params = new URLSearchParams(searchParams);
 
     const [loading, setLoading] = useState(true);
     const [loadingTeams, setLoadingTeams] = useState(true);
