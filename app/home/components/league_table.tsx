@@ -1,4 +1,4 @@
-// import Image from 'next/image'
+import Image from 'next/image'
 import {
     Tooltip,
     TooltipContent,
@@ -2034,7 +2034,7 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
                                         <TableCell >
                                             <div className="flex gap-2 items-center">
                                                 {/* <img src="images/manchester city.png" alt="" width="12%" height="10%" /> */}
-                                                <img
+                                                <Image
                                                     // src="/images/teams/{(row?.country)}.concat{(row?.team)}.png"
                                                     src={"/images/teams/" + row?.country + " - " + row?.team + ".png"}
 

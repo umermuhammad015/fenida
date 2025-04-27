@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
-// import Image from 'next/image'
+import Image from 'next/image'
 import { clsx } from 'clsx';
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
@@ -208,13 +208,12 @@ export default function CompletedMatches() {
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.7 }}
                                 >
-                                    <img
-                                        src={"/images/teams/" + completed_matches[completed_matches_count]?.home_country + " - " +
-                                            completed_matches[completed_matches_count]?.home_team + ".png"}
+                                    <Image
+                                        src={`/images/teams/${completed_matches[completed_matches_count]?.home_country} - ${completed_matches[completed_matches_count]?.home_team}.png`}
                                         width={50}
                                         height={50}
                                         className="object-contain"
-                                        alt="Picture of the author"
+                                        alt={`${completed_matches[completed_matches_count]?.home_team || "Home team"} logo`}
                                     />
                                 </motion.div>
                                 <div className="text-center">{completed_matches[completed_matches_count]?.home_team_short}</div>
@@ -238,7 +237,7 @@ export default function CompletedMatches() {
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.7 }}
                                 >
-                                    <img
+                                    <Image
                                         src={"/images/teams/" + completed_matches[completed_matches_count]?.away_country + " - " +
                                             completed_matches[completed_matches_count]?.away_team + ".png"}
                                         width={50}
@@ -315,7 +314,7 @@ export default function CompletedMatches() {
                                                         </TableCell>
                                                         <TableCell>
                                                             <div className="flex gap-2 items-center">
-                                                                <img
+                                                                <Image
                                                                     src={"/images/teams/" + row?.home_country + " - " + row?.home_team + ".png"}
                                                                     width={25}
                                                                     height={25}
@@ -357,7 +356,7 @@ export default function CompletedMatches() {
                                                         <TableCell>
                                                             <div className="flex gap-2 justify-end">
                                                                 <div className="flex justify-center items-center">{(row?.away_team_short)}</div>
-                                                                <img
+                                                                <Image
                                                                     src={"/images/teams/" + row?.away_country + " - " + row?.away_team + ".png"}
                                                                     width={25}
                                                                     height={25}

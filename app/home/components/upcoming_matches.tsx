@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { clsx } from 'clsx';
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
-// import Image from 'next/image'
+import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -40,6 +40,8 @@ type UpcomingMatchesTypeNull = {
     prob2: number | null;
     prob_draw: number | null;
 }
+
+
 
 export default function UpcomingMatches() {
     const searchParams = useSearchParams()
@@ -106,8 +108,8 @@ export default function UpcomingMatches() {
 
                 const um = uma.filter(games => ((games.home_team == user_team) || (games.away_team == user_team)));
 
-                setUpcomingMatches(um);
-                setUpcomingMatchesAll(uma);
+                setUpcomingMatches(um as UpcomingMatchesTypeNull[]);
+                setUpcomingMatchesAll(uma as UpcomingMatchesTypeNull[]);
 
                 // console.log("um and uma")
                 // console.log(um)
@@ -162,7 +164,7 @@ export default function UpcomingMatches() {
                                         exit={{ opacity: 0 }}
                                         transition={{ duration: 0.7 }}
                                     >
-                                        <img
+                                        <Image
                                             src={"/images/teams/" + upcoming_matches[count]?.home_country + " - " + upcoming_matches[count]?.home_team + ".png"}
                                             width={50}
                                             height={50}
@@ -189,7 +191,7 @@ export default function UpcomingMatches() {
                                         exit={{ opacity: 0 }}
                                         transition={{ duration: 0.7 }}
                                     >
-                                        <img
+                                        <Image
                                             src={"/images/teams/" + upcoming_matches[count]?.away_country + " - " + upcoming_matches[count]?.away_team + ".png"}
                                             width={50}
                                             height={50}
@@ -269,7 +271,7 @@ export default function UpcomingMatches() {
                                                     </TableCell>
                                                     <TableCell>
                                                         <div className="flex gap-2 items-center">
-                                                            <img
+                                                            <Image
                                                                 src={"/images/teams/" + row?.home_country + " - " + row?.home_team + ".png"}
                                                                 width={25}
                                                                 height={25}
@@ -293,7 +295,7 @@ export default function UpcomingMatches() {
                                                     <TableCell>
                                                         <div className="flex gap-2 justify-end">
                                                             <div className="">{(row?.away_team)}</div>
-                                                            <img
+                                                            <Image
                                                                 src={"/images/teams/" + row?.away_country + " - " + row?.away_team + ".png"}
                                                                 width={25}
                                                                 height={25}
