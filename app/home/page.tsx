@@ -4,7 +4,7 @@ import Points from './components/points';
 import LeagueTable from './components/league_table';
 import { Suspense } from 'react';
 
-import FetchTeamLeague from './components/TeamLeague';
+// import FetchTeamLeague from './components/TeamLeague';
 import { Skeleton } from '@/components/ui/skeleton';
 // import LeagueTable2 from './components/league_table2';
 
