@@ -12,19 +12,19 @@ import fetchPoint from "./FetchPoint";
 import Points_Skeleton from "./points_skeleton";
 
 type TeamPoints = {
-    total_away_deserved_points: bigint | null;
-    total_away_deserved_points_percentile: bigint | null;
-    total_away_points: bigint | null;
-    total_away_points_percentile: bigint | null;
-    total_away_predicted_points: bigint | null;
-    total_away_predicted_points_percentile: bigint | null;
-    total_home_deserved_points: bigint | null;
-    total_home_deserved_points_percentile: bigint | null;
-    total_home_points: bigint | null;
-    total_home_points_percentile: bigint | null;
-    total_home_predicted_points: bigint | null;
-    total_home_predicted_points_percentile: bigint | null;
-    total_points: bigint | null;
+    total_away_deserved_points: number | null;
+    total_away_deserved_points_percentile: number | null;
+    total_away_points: number | null;
+    total_away_points_percentile: number | null;
+    total_away_predicted_points: number | null;
+    total_away_predicted_points_percentile: number | null;
+    total_home_deserved_points: number | null;
+    total_home_deserved_points_percentile: number | null;
+    total_home_points: number | null;
+    total_home_points_percentile: number | null;
+    total_home_predicted_points: number | null;
+    total_home_predicted_points_percentile: number | null;
+    total_points: number | null;
 };
 
 export default function Points() {
