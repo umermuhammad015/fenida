@@ -1,11 +1,12 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import { useQueryState, } from 'nuqs'
-import FetchTeams from './Fetchteams';
+import { useQueryState } from 'nuqs'
+import FetchTeams from './Fetchteams'
 // import FetchSeason from './fetchSeason';
-import { useSearchParams } from 'next/navigation';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useSearchParams } from 'next/navigation'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+
 // type SeasonType = {
 //     league_start_year: bigint | null;
 // };
@@ -106,7 +107,7 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
         };
 
         fetchInitialData();
-    }, []); // Run only once on component mount
+    }, [league, searchParams, setTeam]); // added proper dependencies
 
     // Effect to handle league changes
     useEffect(() => {
@@ -149,7 +150,7 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
         };
 
         fetchTeamsForLeague();
-    }, [league]); // Only run when league changes
+    }, [league, team, setTeam]); // added proper dependencies
 
     function onLeagueChange(value: string) {
         setLeague(value);
