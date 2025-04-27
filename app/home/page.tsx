@@ -25,7 +25,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
     return (
         <div className="container">
 
-            <Suspense fallback={<>Loading...</>}>
+            {/* <Suspense fallback={<>Loading...</>}>
                 <div>
                     <FetchTeamLeague
                         league_start_year={season}
@@ -34,7 +34,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
 
                     />
                 </div>
-            </Suspense>
+            </Suspense> */}
 
             <div className="grid xs:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-2 text-xs mt-4">
 
