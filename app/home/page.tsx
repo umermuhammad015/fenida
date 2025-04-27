@@ -4,7 +4,7 @@ import Points from './components/points';
 import LeagueTable from './components/league_table';
 import { Suspense } from 'react';
 
-// import FetchTeamLeague from './components/TeamLeague';
+import FetchTeamLeague from './components/TeamLeague';
 import { Skeleton } from '@/components/ui/skeleton';
 // import LeagueTable2 from './components/league_table2';
 
@@ -14,8 +14,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
     const {
         league = "ENG1",
         season = "2024",
-        // user_team = "Nottingham Forest",
-        // user_league_code = "ENG1"
+        user_team = "Nottingham Forest",
+        user_league_code = "ENG1"
 
     } = await searchParams;
 
@@ -25,7 +25,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
     return (
         <div className="container">
 
-            {/* <Suspense fallback={<>Loading...</>}>
+            <Suspense fallback={<>Loading...</>}>
                 <div>
                     <FetchTeamLeague
                         league_start_year={season}
@@ -34,7 +34,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
 
                     />
                 </div>
-            </Suspense> */}
+            </Suspense>
 
             <div className="grid xs:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-2 text-xs mt-4">
 
