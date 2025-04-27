@@ -7,7 +7,7 @@ export default async function FetchPlayer(name:string) {
     // console.log("suggested_player")
     // console.log(name)
 
-    const suggested_player = await prisma.ger2_unique_players.findMany({
+    const suggested_player = await prisma.eng1_unique_players.findMany({
         select:{
             name: true
         },
