@@ -14,8 +14,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ [
     const {
         league = "ENG1",
         season = "2024",
-        user_team = "Nottingham Forest",
-        user_league_code = "ENG1"
+        // user_team = "Nottingham Forest",
+        // user_league_code = "ENG1"
 
     } = await searchParams;
 
