@@ -69,288 +69,96 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
 
     const [teamsList, setTeamsList] = useState<(string | null)[]>([])
 
-
+    // Initial data loading
     useEffect(() => {
-
-
-
-        // const fetchSeasons = async () => {
-        //     // console.log("fetchData() in FetchLeagueCodes() useEffect")
-
-        //     try {
-        //         // console.log("tring fetching league code")
-
-        //         const all_seasons = await FetchSeason()
-
-        //         // console.log("seasons list");
-        //         // console.log(all_seasons);
-
-        //         setSeasonsList(all_seasons);
-
-        //     } catch (error) {
-
-        //         console.error('Error fetching league codes list:', error);
-        //     } finally {
-        //         setLoading(false)
-        //     }
-        // };
-
-        const fetchLeagues = async () => {
-            // console.log("fetchData() in FetchLeagueCodes() useEffect")
-
+        const fetchInitialData = async () => {
             try {
-                // console.log("tring fetching league code")
-
-                // const all_league_codes = await FetchLeagueCodes(Number(season))
-
-                // console.log("league code list");
-                // console.log(all_league_codes);
-
-                // setLeagueCodesList(all_league_codes);
-            } catch (error) {
-
-                console.error('Error fetching league codes list:', error);
-            } finally {
-                setLoading(false)
-            }
-        };
-
-        const fetchTeams = async () => {
-            setLoadingTeams(true)
-            try {
-                const teams = await FetchTeams(league)
-                // const teams = await FetchTeams(Number(season), league)
-
-
-
+                setLoading(true);
+                // Fetch the initial league data
+                const teams = await FetchTeams(league);
                 const uniqueTeams = [...new Set(teams.map(item => item.team))];
-                if (uniqueTeams.includes("Nottingham Forest")) {
-                    setTeam("Nottingham Forest")
-                } else if (uniqueTeams.includes("Rio Ave")) {
-                    setTeam("Rio Ave")
-                } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
-                    setTeam("Olympiakos Piraeus")
-                }
-                else if (uniqueTeams.includes("Damac")) {
-                    setTeam("Damac")
-                }
                 setTeamsList(uniqueTeams);
-
+                
+                // Check if current team exists in the fetched teams
+                const currentTeamInURL = searchParams.get('team');
+                const teamExists = currentTeamInURL && uniqueTeams.includes(currentTeamInURL);
+                
+                if (!teamExists) {
+                    // Set default team if current doesn't exist
+                    if (uniqueTeams.includes("Nottingham Forest")) {
+                        setTeam("Nottingham Forest");
+                    } else if (uniqueTeams.includes("Rio Ave")) {
+                        setTeam("Rio Ave");
+                    } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
+                        setTeam("Olympiakos Piraeus");
+                    } else if (uniqueTeams.includes("Damac")) {
+                        setTeam("Damac");
+                    } else if (uniqueTeams.length > 0) {
+                        setTeam(uniqueTeams[0]);
+                    }
+                }
             } catch (error) {
-
-                console.error('Error fetching teams list:', error);
+                console.error('Error fetching initial data:', error);
             } finally {
-                setLoadingTeams(false)
+                setLoading(false);
+                setLoadingTeams(false);
             }
         };
 
-        // fetchSeasons();
-        fetchLeagues();
-        fetchTeams();
+        fetchInitialData();
+    }, []); // Run only once on component mount
 
-    }, [league]);
-    // }, [season, league]);
+    // Effect to handle league changes
+    useEffect(() => {
+        // Skip the initial render where league might be undefined
+        if (!league) return;
+        
+        const fetchTeamsForLeague = async () => {
+            try {
+                setLoadingTeams(true);
+                const teams = await FetchTeams(league);
+                const uniqueTeams = [...new Set(teams.map(item => item.team))];
+                setTeamsList(uniqueTeams);
+                
+                // Check if current team exists in new league
+                if (team && !uniqueTeams.includes(team)) {
+                    // Set a default team for the new league
+                    let defaultTeam: string | null = null;
+                    
+                    if (uniqueTeams.includes("Nottingham Forest")) {
+                        defaultTeam = "Nottingham Forest";
+                    } else if (uniqueTeams.includes("Rio Ave")) {
+                        defaultTeam = "Rio Ave";
+                    } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
+                        defaultTeam = "Olympiakos Piraeus";
+                    } else if (uniqueTeams.includes("Damac")) {
+                        defaultTeam = "Damac";
+                    } else if (uniqueTeams.length > 0) {
+                        defaultTeam = uniqueTeams[0];
+                    }
+                    
+                    if (defaultTeam) {
+                        setTeam(defaultTeam);
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching teams for league:', error);
+            } finally {
+                setLoadingTeams(false);
+            }
+        };
 
-    // async function onSeasonChange(value: string) {
-
-    //     const newSeason = value;
-    //     setSeason(newSeason);
-
-    //     // Update or add the season parameter
-    //     params.set('season', newSeason);
-
-    //     // Remove team parameter if it exists
-    //     params.delete('team');
-
-    //     // Remove team parameter if it exists
-    //     params.delete('league_code');
-
-
-
-
-    //     // const fetchSeasons = async () => {
-    //     //     // console.log("fetchData() in FetchLeagueCodes() useEffect")
-
-    //     //     try {
-    //     //         // console.log("tring fetching league code")
-
-    //     //         const all_seasons = await FetchSeason()
-
-    //     //         // console.log("seasons list");
-    //     //         // console.log(all_seasons);
-
-    //     //         setSeasonsList(all_seasons);
-
-    //     //     } catch (error) {
-
-    //     //         console.error('Error fetching league codes list:', error);
-    //     //     } finally {
-    //     //         setLoading(false)
-    //     //     }
-    //     // };
-
-
-
-    //     const fetchTeams = async () => {
-    //         setLoadingTeams(true)
-    //         try {
-    //             const teams = await FetchTeams(Number(season), league)
-
-    //             // console.log("teams list");
-    //             // console.log(teams);
-
-    //             const uniqueTeams = [...new Set(teams.map(item => item.team))];
-    //             // console.log("teams list");
-    //             // console.log(uniqueTeams);
-    //             if (uniqueTeams.includes("Nottingham Forest")) {
-    //                 setTeam("Nottingham Forest")
-    //             } else if (uniqueTeams.includes("Rio Ave")) {
-    //                 setTeam("Rio Ave")
-    //             } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
-    //                 setTeam("Olympiakos Piraeus")
-    //             }
-
-    //             setTeamsList(uniqueTeams);
-
-
-    //             // setTeamsList(teams);
-    //         } catch (error) {
-
-    //             console.error('Error fetching teams list:', error);
-    //         } finally {
-    //             setLoadingTeams(false)
-    //         }
-    //     };
-
-    //     // fetchSeasons();
-    //     // fetchLeagues();
-    //     fetchTeams();
-
-    // };
-
+        fetchTeamsForLeague();
+    }, [league]); // Only run when league changes
 
     function onLeagueChange(value: string) {
-
-        const league = value
-
-        // const league = e.target.value;
-        setLeague(league);
-
-        // Update or add the season parameter
-        // params.set('league_code', league);
-
-        // Remove team parameter if it exists
-        // params.delete('team');
-
-
-        // Push the new URL with updated search params
-        // router.push(`?${params.toString()}`);
-
-
-
-        // console.log("Fetching data for ", league)
-
-        if (league !== "") {
-            const fetchTeams = async () => {
-                try {
-                    setLoadingTeams(true)
-                    // const teams = await FetchTeams(Number(season), league)
-                    const teams = await FetchTeams(league)
-
-                    // console.log("teams list");
-                    // console.log(teams);
-
-                    const uniqueTeams = [...new Set(teams.map(item => item.team))];
-                    // console.log("teams list");
-                    // console.log(uniqueTeams);
-                    if (uniqueTeams.includes("Nottingham Forest")) {
-                        setTeam("Nottingham Forest")
-                    } else if (uniqueTeams.includes("Rio Ave")) {
-                        setTeam("Rio Ave")
-                    } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
-                        setTeam("Olympiakos Piraeus")
-                    } else if (uniqueTeams.includes("Damac")) {
-                        setTeam("Damac")
-                    } else {
-                        setTeam(teams[0].team)
-                    }
-                    setTeamsList(uniqueTeams);
-
-                    // setTeamsList(teams);
-                    // setTeam(teams[0].team)
-
-                    // Remove team parameter if it exists
-                    // params.delete('team');
-
-                    // Push the new URL with updated search params
-                    // router.push(`?${params.toString()}`);
-
-                    // Update or add the season parameter
-                    if (teams[0].team) {
-                        params.set('team', teams[0].team);
-                        // Push the new URL with updated search params
-                        router.push(`?${params.toString()}`);
-                    }
-
-
-
-                } catch (error) {
-
-                    console.error('Error fetching teams list:', error);
-                } finally {
-                    setLoadingTeams(false)
-
-
-                }
-            };
-
-            fetchTeams();
-        }
-
-
+        setLeague(value);
+        // We don't need to manually fetch teams here as the useEffect will handle it
     }
-
-    // function onTeamChange(e: any) {
-
-    //     // e => setTeam(e.target.value)
-
-    //     // const team = e.target.value
-
-    //     // const league = e.target.value;
-    //     setTeam(team);
-
-    //     // Update or add the season parameter
-    //     // params.set('team', team);
-
-    //     // Push the new URL with updated search params
-    //     // router.push(`?${params.toString()}`, { scroll: false });
-    // }
-
-
-    // useEffect(() => {
-
-    //     // console.log("us" + league + " " + season)
-
-    //     const query = {
-    //         league_code: league,
-    //         season: season,
-    //         teams: teams,
-
-    //     }
-    //     const url = qs.stringifyUrl({
-    //         url: window.location.href,
-    //         query
-    //     }, { skipNull: true, skipEmptyString: true })
-
-    //     router.push(url)
-
-    // }, [league, season, teams])
-
 
     if (loading) {
         return (<>Loading....</>)
     } else {
-
         return (
             <>
                 {/* <button onClick={() => {
@@ -392,7 +200,6 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent className='rounded-lg'>
-
                                 <SelectItem
                                     key={1}
                                     value={"ENG1"}
@@ -440,47 +247,33 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                     </div>
 
                     {/* team */}
-
-                    {
-                        !loadingTeams ?
-                            <>
-
-                                <div className="">
-                                    <label htmlFor="">
-                                        Team
-                                    </label>
-                                    <Select value={team} onValueChange={setTeam}>
-                                        <SelectTrigger
-                                            className="py-2 font-medium bg-background rounded-lg xs:w-24 md:w-24 lg:w-60">
-                                            <SelectValue placeholder="Select Team" />
-                                        </SelectTrigger>
-                                        <SelectContent className='rounded-lg'>
-                                            {(teamsList.length > 0) && teamsList.map((teamItem, index: number) => (
-                                                <SelectItem
-                                                    key={index}
-                                                    value={teamItem as string}
-
-                                                // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
-                                                >
-                                                    {teamItem}
-                                                </SelectItem>))}
-                                        </SelectContent>
-                                    </Select>
-
-                                </div>
-
-                            </> : <>Loading...</>
-                    }
-
-
-
+                    <div className="">
+                        <label htmlFor="">
+                            Team
+                        </label>
+                        {loadingTeams ? (
+                            <div className="py-2">Loading...</div>
+                        ) : (
+                            <Select value={team} onValueChange={setTeam}>
+                                <SelectTrigger
+                                    className="py-2 font-medium bg-background rounded-lg xs:w-24 md:w-24 lg:w-60">
+                                    <SelectValue placeholder="Select Team" />
+                                </SelectTrigger>
+                                <SelectContent className='rounded-lg'>
+                                    {(teamsList.length > 0) && teamsList.map((teamItem, index: number) => (
+                                        <SelectItem
+                                            key={index}
+                                            value={teamItem as string}
+                                        // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
+                                        >
+                                            {teamItem}
+                                        </SelectItem>))}
+                                </SelectContent>
+                            </Select>
+                        )}
+                    </div>
                 </div>
             </>
         )
-
     }
 }
-
-
-
-

@@ -796,29 +796,28 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
 
 
     const last_Five_Matches: MatchData[] = await prisma.$queryRaw`
-    
-            SELECT * FROM (
-                SELECT 
-                    team,
-                    team_against,
-                    goals,
-                    goals_against,
-                    league_code,
-                    ground,
-                    date,
-                    league_start_year,
-                    ROW_NUMBER() OVER (
-                    PARTITION BY team 
-                    ORDER BY date DESC
-                    ) as row_num
-                FROM fenida_fenida.points_long 
-                WHERE league_start_year = 2024 AND status = 'completed' AND league_code IN ('ENG1','GRE1','POR1','SAU1')
-                ) ranked_teams
-                WHERE row_num <= 5
-                ORDER BY team, date ASC;
-            
-    `;
-
+    SELECT * FROM (
+        SELECT 
+            team,
+            team_against,
+            goals,
+            goals_against,
+            league_code,
+            ground,
+            date,
+            league_start_year,
+            ROW_NUMBER() OVER (
+                PARTITION BY team 
+                ORDER BY date DESC
+            ) as row_num
+        FROM points_long 
+        WHERE league_start_year = 2024 
+        AND status = 'completed' 
+        AND league_code NOT IN ('UEL', 'UCL')
+    ) ranked_teams
+    WHERE row_num <= 5
+    ORDER BY team, date DESC
+`;
     // const last_Five_Matches: MatchData[] = [  {
     //     team: 'Aston Villa',
     //     team_against: 'Wolverhampton',
