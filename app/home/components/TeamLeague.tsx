@@ -228,6 +228,13 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                                 >
                                     Pro League (Saudi Arabia)
                                 </SelectItem>
+                                <SelectItem
+                                    key={5}
+                                    value={"SAU2"}
+                                // className="py-2 font-medium dark:bg-gray-800 dark:text-gray-200"
+                                >
+                                    First Division (Saudi Arabia)
+                                </SelectItem>
                                 {/* <SelectItem
                                     key={4}
                                     value={"FRA1"}

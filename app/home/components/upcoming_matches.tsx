@@ -143,8 +143,8 @@ export default function UpcomingMatches() {
                 <div className="bg-background rounded-lg p-4">
                     <div className="text-xs">
                         <div className="p-1 text-sm font-semibold border-b-2">
-                            {/* <h2>Upcoming Matches</h2> */}
-                            <h2>Upcoming Match</h2>
+                            <h2>Upcoming Matches</h2>
+                            {/* <h2>Upcoming Match</h2> */}
 
                         </div>
 

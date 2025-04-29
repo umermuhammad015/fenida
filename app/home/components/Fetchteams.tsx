@@ -22,8 +22,8 @@ export default async function FetchTeams(league_code: string) {
         ]
     });
 
-    // console.log("teamsssssss")
-    // console.log(teams)
+    console.log("teamsssssss")
+    console.log(teams)
 
     return (teams)
 }
