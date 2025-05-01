@@ -91,8 +91,8 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                         setTeam("Rio Ave");
                     } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
                         setTeam("Olympiakos Piraeus");
-                    } else if (uniqueTeams.includes("Damac")) {
-                        setTeam("Damac");
+                    } else if (uniqueTeams.includes("Al Nassr")) {
+                        setTeam("Al Nassr");
                     } else if (uniqueTeams.includes("Neom SC")) {
                         setTeam("Neom SC");
                     } else if (uniqueTeams.length > 0) {
@@ -133,8 +133,8 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                         defaultTeam = "Rio Ave";
                     } else if (uniqueTeams.includes("Olympiakos Piraeus")) {
                         defaultTeam = "Olympiakos Piraeus";
-                    } else if (uniqueTeams.includes("Damac")) {
-                        defaultTeam = "Damac";
+                    } else if (uniqueTeams.includes("Al Nassr")) {
+                        defaultTeam = "Al Nassr";
                     } else if (uniqueTeams.includes("Neom SC")) {
                         setTeam("Neom SC");
                     } else if (uniqueTeams.length > 0) {

@@ -126,7 +126,8 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
         AND league_code NOT IN ('UEL', 'UCL')
     ) ranked_teams
     WHERE row_num <= 5
-    ORDER BY team, date DESC
+    ORDER BY team, row_num DESC
+
 `;
   
 
@@ -245,6 +246,8 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
         }
 
     }
+
+    
 
 
     return (
