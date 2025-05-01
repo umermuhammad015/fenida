@@ -78,11 +78,11 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                 const teams = await FetchTeams(league);
                 const uniqueTeams = [...new Set(teams.map(item => item.team))];
                 setTeamsList(uniqueTeams);
-                
+
                 // Check if current team exists in the fetched teams
                 const currentTeamInURL = searchParams.get('team');
                 const teamExists = currentTeamInURL && uniqueTeams.includes(currentTeamInURL);
-                
+
                 if (!teamExists) {
                     // Set default team if current doesn't exist
                     if (uniqueTeams.includes("Nottingham Forest")) {
@@ -93,6 +93,8 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                         setTeam("Olympiakos Piraeus");
                     } else if (uniqueTeams.includes("Damac")) {
                         setTeam("Damac");
+                    } else if (uniqueTeams.includes("Neom SC")) {
+                        setTeam("Neom SC");
                     } else if (uniqueTeams.length > 0) {
                         setTeam(uniqueTeams[0]);
                     }
@@ -112,19 +114,19 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
     useEffect(() => {
         // Skip the initial render where league might be undefined
         if (!league) return;
-        
+
         const fetchTeamsForLeague = async () => {
             try {
                 setLoadingTeams(true);
                 const teams = await FetchTeams(league);
                 const uniqueTeams = [...new Set(teams.map(item => item.team))];
                 setTeamsList(uniqueTeams);
-                
+
                 // Check if current team exists in new league
                 if (team && !uniqueTeams.includes(team)) {
                     // Set a default team for the new league
                     let defaultTeam: string | null = null;
-                    
+
                     if (uniqueTeams.includes("Nottingham Forest")) {
                         defaultTeam = "Nottingham Forest";
                     } else if (uniqueTeams.includes("Rio Ave")) {
@@ -133,10 +135,12 @@ export default function FetchTeamLeague({ user_league_code, user_team }: Teamlea
                         defaultTeam = "Olympiakos Piraeus";
                     } else if (uniqueTeams.includes("Damac")) {
                         defaultTeam = "Damac";
+                    } else if (uniqueTeams.includes("Neom SC")) {
+                        setTeam("Neom SC");
                     } else if (uniqueTeams.length > 0) {
                         defaultTeam = uniqueTeams[0];
                     }
-                    
+
                     if (defaultTeam) {
                         setTeam(defaultTeam);
                     }
