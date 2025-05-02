@@ -128,6 +128,7 @@ export default async function LeagueTable({ league, season }: LeagueTableProps) 
     WHERE row_num <= 5
     ORDER BY team, row_num DESC
 
+
 `;
   
 

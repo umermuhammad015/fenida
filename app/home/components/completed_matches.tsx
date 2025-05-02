@@ -208,8 +208,19 @@ export default function CompletedMatches() {
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.7 }}
                                 >
-                                    <Image
+                                    {/* <Image
                                         src={`/images/teams/${completed_matches[completed_matches_count]?.home_country} - ${completed_matches[completed_matches_count]?.home_team}.png`}
+                                        width={50}
+                                        height={50}
+                                        className="object-contain"
+                                        alt={`${completed_matches[completed_matches_count]?.home_team || "Home team"} logo`}
+                                    /> */}
+
+                                    <Image
+                                        src={`/images/teams/${completed_matches[completed_matches_count]?.home_country} - ${completed_matches[completed_matches_count]?.home_team === "Bodo/Glimt"
+                                            ? "Bodo-Glimt"
+                                            : completed_matches[completed_matches_count]?.home_team
+                                            }.png`}
                                         width={50}
                                         height={50}
                                         className="object-contain"
@@ -237,13 +248,24 @@ export default function CompletedMatches() {
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.7 }}
                                 >
-                                    <Image
+                                    {/* <Image
                                         src={"/images/teams/" + completed_matches[completed_matches_count]?.away_country + " - " +
                                             completed_matches[completed_matches_count]?.away_team + ".png"}
                                         width={50}
                                         height={50}
                                         className="object-contain"
                                         alt="Picture of the author"
+                                    /> */}
+
+                                    <Image
+                                        src={`/images/teams/${completed_matches[completed_matches_count]?.away_country} - ${completed_matches[completed_matches_count]?.away_team === "Bodo/Glimt"
+                                            ? "Bodo-Glimt"
+                                            : completed_matches[completed_matches_count]?.away_team
+                                            }.png`}
+                                        width={50}
+                                        height={50}
+                                        className="object-contain"
+                                        alt={`${completed_matches[completed_matches_count]?.away_team || "Away team"} logo`}
                                     />
                                 </motion.div>
                                 <div className="text-center">{completed_matches[completed_matches_count]?.away_team_short}</div>
@@ -314,8 +336,18 @@ export default function CompletedMatches() {
                                                         </TableCell>
                                                         <TableCell>
                                                             <div className="flex gap-2 items-center">
-                                                                <Image
+                                                                {/* <Image
                                                                     src={"/images/teams/" + row?.home_country + " - " + row?.home_team + ".png"}
+                                                                    width={25}
+                                                                    height={25}
+                                                                    className="object-contain"
+                                                                    alt="Picture of the author"
+                                                                /> */}
+                                                                <Image
+                                                                    src={`/images/teams/${row?.home_country} - ${row?.home_team === "Bodo/Glimt"
+                                                                        ? "Bodo-Glimt"
+                                                                        : row?.home_team
+                                                                        }.png`}
                                                                     width={25}
                                                                     height={25}
                                                                     className="object-contain"
@@ -356,8 +388,19 @@ export default function CompletedMatches() {
                                                         <TableCell>
                                                             <div className="flex gap-2 justify-end">
                                                                 <div className="flex justify-center items-center">{(row?.away_team_short)}</div>
-                                                                <Image
+                                                                {/* <Image
                                                                     src={"/images/teams/" + row?.away_country + " - " + row?.away_team + ".png"}
+                                                                    width={25}
+                                                                    height={25}
+                                                                    className="object-contain"
+                                                                    alt="Picture of the author"
+                                                                /> */}
+
+                                                                <Image
+                                                                    src={`/images/teams/${row?.away_country} - ${row?.away_team === "Bodo/Glimt"
+                                                                        ? "Bodo-Glimt"
+                                                                        : row?.away_team
+                                                                        }.png`}
                                                                     width={25}
                                                                     height={25}
                                                                     className="object-contain"
